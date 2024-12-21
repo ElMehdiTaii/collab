@@ -81,3 +81,5 @@ Thumbs.db
 
 # Optionally, exclude directories named "cache" (case insensitive)
 **/[Cc]ache/
+/Collaboration.MVC/obj/Debug/net8.0/Collaboration.MVC.AssemblyInfo.cs
+/Collaboration.MVC/obj/Debug/net8.0/Collaboration.MVC.AssemblyInfoInputs.cache

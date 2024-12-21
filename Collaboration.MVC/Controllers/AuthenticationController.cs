@@ -14,7 +14,7 @@ public class AuthenticationController(IMediator _mediator) : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async IActionResult Login(AuthenticationRequest authenticationRequest)
+    public IActionResult Login(AuthenticationRequest authenticationRequest)
     {
         if (string.IsNullOrWhiteSpace(authenticationRequest.Email) ||
             string.IsNullOrWhiteSpace(authenticationRequest.Password))
