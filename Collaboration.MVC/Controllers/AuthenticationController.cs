@@ -4,8 +4,11 @@ using Collaboration.Application.Features.Authentication.Commands.SendResetPasswo
 using Collaboration.Application.Features.Authentication.Queries.AuthenticationQuery;
 using Collaboration.Domain.DTOs.Authentication;
 using MediatR;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Collaboration.MVC.Controllers;
 public class AuthenticationController(IMapper _mapper, IMediator _mediator) : Controller
@@ -23,6 +26,7 @@ public class AuthenticationController(IMapper _mapper, IMediator _mediator) : Co
         {
             var query = _mapper.Map<AuthenticationQuery>(loginDto);
             var result = await _mediator.Send(query);
+            await SetUpCookiesAsync(_mapper.Map<UserInformationDto>(result), loginDto.RememberMe);
             return RedirectToAction("Index", "Dashboard");
         }
         catch (Exception ex)
@@ -94,8 +98,33 @@ public class AuthenticationController(IMapper _mapper, IMediator _mediator) : Co
     }
 
     [Authorize]
-    public IActionResult Logout()
+    public async Task<IActionResult> Logout()
+    {
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        return RedirectToAction("Login", "Authentication");
+    }
+    public IActionResult Denied()
     {
         return View();
     }
+    #region Private Methods
+    private async Task SetUpCookiesAsync(UserInformationDto userInformationDto, bool rememberMe)
+    {
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, userInformationDto.Name),
+            new Claim(ClaimTypes.Email, userInformationDto.Email),
+            new Claim("Roles", userInformationDto.Roles.ToString()!),
+        };
+
+        var claimsIdentity = new ClaimsIdentity(claims, "cookie");
+        var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, new AuthenticationProperties
+        {
+            IsPersistent = rememberMe,
+            ExpiresUtc = DateTime.UtcNow.AddMinutes(30)
+        });
+    }
+    #endregion
 }
