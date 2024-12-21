@@ -79,9 +79,5 @@ Thumbs.db
 .cache/
 *.cache
 
-# Optionally, exclude directories named "cache" (case insensitive)
-**/[Cc]ache/
-/Collaboration.MVC/obj/Debug/net8.0/Collaboration.MVC.AssemblyInfo.cs
-/Collaboration.MVC/obj/Debug/net8.0/Collaboration.MVC.AssemblyInfoInputs.cache
-/Collaboration.MVC/obj/Debug/net8.0/refint/Collaboration.MVC.dll
-/Collaboration.MVC/obj/Debug/net8.0/ref/Collaboration.MVC.dll
+# Exclude executable files
+*.exe

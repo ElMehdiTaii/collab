@@ -1,11 +1,9 @@
-﻿using Collaboration.Application.Features.Authentication.Queries.AuthenticationQuery;
-using Collaboration.Domain.Requests;
-using MediatR;
+﻿using Collaboration.Domain.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Collaboration.MVC.Controllers;
 
-public class AuthenticationController(IMediator _mediator) : Controller
+public class AuthenticationController : Controller
 {
     public IActionResult Index()
     {
