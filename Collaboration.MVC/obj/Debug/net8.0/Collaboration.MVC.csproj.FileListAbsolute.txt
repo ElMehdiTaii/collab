@@ -26,3 +26,5 @@ C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.MVC\o
 C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.MVC\obj\Debug\net8.0\Collaboration.MVC.pdb
 C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.MVC\obj\Debug\net8.0\Collaboration.MVC.genruntimeconfig.cache
 C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.MVC\obj\Debug\net8.0\ref\Collaboration.MVC.dll
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.MVC\obj\Debug\net8.0\Collaboration.MVC.csproj.AssemblyReference.cache
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.MVC\obj\Debug\net8.0\Collaboration.MVC.sourcelink.json

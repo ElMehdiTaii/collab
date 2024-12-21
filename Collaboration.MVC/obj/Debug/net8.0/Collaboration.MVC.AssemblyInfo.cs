@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Collaboration.MVC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+62c131b4b2d46ec07e8577341f50d63397f516d7")]
 [assembly: System.Reflection.AssemblyProductAttribute("Collaboration.MVC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Collaboration.MVC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

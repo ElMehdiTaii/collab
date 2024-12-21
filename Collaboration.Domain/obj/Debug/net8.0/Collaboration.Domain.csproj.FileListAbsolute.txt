@@ -9,3 +9,4 @@ C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Domai
 C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Domain\obj\Debug\net8.0\refint\Collaboration.Domain.dll
 C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Domain\obj\Debug\net8.0\Collaboration.Domain.pdb
 C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Domain\obj\Debug\net8.0\ref\Collaboration.Domain.dll
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Domain\obj\Debug\net8.0\Collaboration.Domain.sourcelink.json

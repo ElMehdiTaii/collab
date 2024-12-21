@@ -13,3 +13,4 @@ C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Appli
 C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Application\obj\Debug\net8.0\refint\Collaboration.Application.dll
 C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Application\obj\Debug\net8.0\Collaboration.Application.pdb
 C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Application\obj\Debug\net8.0\ref\Collaboration.Application.dll
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Application\obj\Debug\net8.0\Collaboration.Application.sourcelink.json
