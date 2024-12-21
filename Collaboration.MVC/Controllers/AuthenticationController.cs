@@ -1,35 +1,47 @@
-﻿using Collaboration.Domain.Requests;
+﻿using Collaboration.Domain.DTOs.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Collaboration.MVC.Controllers;
 public class AuthenticationController : Controller
 {
-    public IActionResult Index()
+    public IActionResult Login()
     {
         return View();
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Login(AuthenticationRequest authenticationRequest)
+    public IActionResult Login(LoginDto loginDto)
     {
-        if (string.IsNullOrWhiteSpace(authenticationRequest.Email) ||
-            string.IsNullOrWhiteSpace(authenticationRequest.Password))
-        {
-            return View();
-        }
         return View();
     }
 
-    public IActionResult RestPassword()
+    public IActionResult Reset()
     {
-        //SendResetPasswordMailCommandq
+        return View();
+    }
+    [ValidateAntiForgeryToken]
+    public IActionResult Reset(ResetPasswordDto resetPasswordDto)
+    {
         return View();
     }
 
-    public IActionResult UpdatePassword()
+    public IActionResult Update()
     {
-        //ResetPasswordCommand
+        return View();
+    }
+    [ValidateAntiForgeryToken]
+    public IActionResult Update(UpdatePasswordDto updatePasswordDto)
+    {
+        return View();
+    }
+    public IActionResult Lock()
+    {
+        return View();
+    }
+    [ValidateAntiForgeryToken]
+    public IActionResult Lock(LockPasswordDto lockPasswordDto)
+    {
         return View();
     }
 }
