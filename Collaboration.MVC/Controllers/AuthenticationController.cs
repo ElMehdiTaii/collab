@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace Collaboration.MVC.Controllers;
-
 public class AuthenticationController : Controller
 {
     public IActionResult Index()
