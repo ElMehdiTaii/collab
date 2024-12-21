@@ -28,3 +28,11 @@ C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.MVC\o
 C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.MVC\obj\Debug\net8.0\ref\Collaboration.MVC.dll
 C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.MVC\obj\Debug\net8.0\Collaboration.MVC.csproj.AssemblyReference.cache
 C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.MVC\obj\Debug\net8.0\Collaboration.MVC.sourcelink.json
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.MVC\bin\Debug\net8.0\FluentValidation.dll
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.MVC\bin\Debug\net8.0\MediatR.dll
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.MVC\bin\Debug\net8.0\MediatR.Contracts.dll
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.MVC\bin\Debug\net8.0\Collaboration.Application.dll
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.MVC\bin\Debug\net8.0\Collaboration.Domain.dll
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.MVC\bin\Debug\net8.0\Collaboration.Application.pdb
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.MVC\bin\Debug\net8.0\Collaboration.Domain.pdb
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.MVC\obj\Debug\net8.0\Collabor.5D43627D.Up2Date
