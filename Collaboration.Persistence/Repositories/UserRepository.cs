@@ -9,6 +9,9 @@ public class UserRepository(CollaborationDatabaseContext context) : GenericRepos
 {
     public async Task<User?> GetAsync(string email)
     {
-        return await _context.User.FirstOrDefaultAsync(u => u.Email == email);
+        return await _context.User
+            .Include(a => a.Account)
+            //ThenInclude(c => c.AccountConfiguration)
+            .FirstOrDefaultAsync(u => u.Email == email);
     }
 }

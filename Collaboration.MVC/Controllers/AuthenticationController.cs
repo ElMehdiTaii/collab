@@ -4,6 +4,7 @@ using Collaboration.Application.Features.Authentication.Commands.SendResetPasswo
 using Collaboration.Application.Features.Authentication.Queries.AuthenticationQuery;
 using Collaboration.Domain.DTOs.Authentication;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Collaboration.MVC.Controllers;
@@ -74,6 +75,7 @@ public class AuthenticationController(IMapper _mapper, IMediator _mediator) : Co
             return View(updatePasswordDto);
         }
     }
+
     public IActionResult Lock()
     {
         return View();
@@ -85,7 +87,14 @@ public class AuthenticationController(IMapper _mapper, IMediator _mediator) : Co
     {
         return View();
     }
+
     public IActionResult Success()
+    {
+        return View();
+    }
+
+    [Authorize]
+    public IActionResult Logout()
     {
         return View();
     }

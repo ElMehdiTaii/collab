@@ -10,10 +10,10 @@ namespace Collaboration.Infrastructure.Extensions;
 
 public static class InfrastructureServicesRegistration
 {
-    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
     {
-        services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
-        services.AddTransient<IEmailSender, EmailSender>();
+        //services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
+        services.AddScoped<IEmailSender, EmailSender>();
         services.AddScoped<IPasswordHasherService, PasswordHasherService>();
         return services;
     }

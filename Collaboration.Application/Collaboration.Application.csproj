@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
     <Folder Include="Features\Document\Commands\ArchiveDocumentCommand\" />
     <Folder Include="Features\Document\Queries\GetDocumentsQuery\" />
     <Folder Include="Features\Document\Queries\GetArchivedDocumentQuery\" />

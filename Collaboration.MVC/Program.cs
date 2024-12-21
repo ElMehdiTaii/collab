@@ -1,7 +1,19 @@
+using Collaboration.Application.Extensions;
+using Collaboration.Infrastructure.Extensions;
+using Collaboration.Persistence.Extensions;
+;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+IConfiguration configuration = builder.Configuration;
+
 builder.Services.AddRazorPages();
+
+builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices();
+builder.Services.AddPersistenceServices(configuration);
 
 var app = builder.Build();
 
@@ -22,6 +34,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Authentication}/{action=Index}/{id?}");
+    pattern: "{controller=Authentication}/{action=Login}/{id?}");
 
 app.Run();
