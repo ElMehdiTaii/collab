@@ -68,3 +68,16 @@ Thumbs.db
 /.vs/Collaboration/v17/.suo
 /.vs/Collaboration/v17/DocumentLayout.backup.json
 /.vs/Collaboration/DesignTimeBuild/.dtbcache.v2
+
+# Exclude DLL files
+*.dll
+
+# Exclude PDB (Program Database) files
+*.pdb
+
+# Exclude Cache files
+.cache/
+*.cache
+
+# Optionally, exclude directories named "cache" (case insensitive)
+**/[Cc]ache/
