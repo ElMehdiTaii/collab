@@ -1,0 +1,67 @@
+# Build Folders
+bin/
+obj/
+
+# User-specific files
+*.rsuser
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+*.tlog
+
+# Temporary Files
+*.tmp
+*.temp
+*.pid
+*.swo
+*.swp
+
+# Visual Studio
+.vs/
+.vscode/
+
+# Generated Files
+*.generated.cs
+Generated_Code/
+
+# Package directories
+*.nupkg
+*.snupkg
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Azure Functions
+local.settings.json
+
+# Resharper files
+_ReSharper.Caches/
+*.DotSettings.user
+
+# Rider files
+.idea/
+
+# Visual Studio Code
+.vscode/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Others
+*.bak
+*.orig
+*.rej
+*.class
+*.pyc
+*.pyo
+*.env
+
+# Environment secrets
+.env
+.env.*
