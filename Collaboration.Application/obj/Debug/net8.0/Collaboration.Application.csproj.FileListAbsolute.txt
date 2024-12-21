@@ -1,0 +1,15 @@
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Application\bin\Debug\net8.0\Collaboration.Application.deps.json
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Application\bin\Debug\net8.0\Collaboration.Application.dll
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Application\bin\Debug\net8.0\Collaboration.Application.pdb
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Application\bin\Debug\net8.0\Collaboration.Domain.dll
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Application\bin\Debug\net8.0\Collaboration.Domain.pdb
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Application\obj\Debug\net8.0\Collaboration.Application.csproj.AssemblyReference.cache
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Application\obj\Debug\net8.0\Collaboration.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Application\obj\Debug\net8.0\Collaboration.Application.AssemblyInfoInputs.cache
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Application\obj\Debug\net8.0\Collaboration.Application.AssemblyInfo.cs
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Application\obj\Debug\net8.0\Collaboration.Application.csproj.CoreCompileInputs.cache
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Application\obj\Debug\net8.0\Collabor.BB8DBC40.Up2Date
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Application\obj\Debug\net8.0\Collaboration.Application.dll
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Application\obj\Debug\net8.0\refint\Collaboration.Application.dll
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Application\obj\Debug\net8.0\Collaboration.Application.pdb
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Application\obj\Debug\net8.0\ref\Collaboration.Application.dll

@@ -1,0 +1,3 @@
+﻿namespace Collaboration.Application.Features.Document.Commands.UpdateDocumentCommand;
+
+internal class UpdateDocumentCommandValidator;

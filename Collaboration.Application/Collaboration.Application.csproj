@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Collaboration.Domain\Collaboration.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+    <Folder Include="Features\Document\Commands\ArchiveDocumentCommand\" />
+    <Folder Include="Features\Document\Queries\GetDocumentsQuery\" />
+    <Folder Include="Features\Document\Queries\GetArchivedDocumentQuery\" />
+    <Folder Include="Features\Folder\Commands\ArchiveFolderCommand\" />
+    <Folder Include="Features\Folder\Queries\GetFoldersQuery\" />
+    <Folder Include="Features\Folder\Queries\ArchiveFolderCommand\" />
+    <Folder Include="MappingProfiles\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,11 @@
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Domain\bin\Debug\net8.0\Collaboration.Domain.deps.json
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Domain\bin\Debug\net8.0\Collaboration.Domain.dll
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Domain\bin\Debug\net8.0\Collaboration.Domain.pdb
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Domain\obj\Debug\net8.0\Collaboration.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Domain\obj\Debug\net8.0\Collaboration.Domain.AssemblyInfoInputs.cache
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Domain\obj\Debug\net8.0\Collaboration.Domain.AssemblyInfo.cs
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Domain\obj\Debug\net8.0\Collaboration.Domain.csproj.CoreCompileInputs.cache
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Domain\obj\Debug\net8.0\Collaboration.Domain.dll
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Domain\obj\Debug\net8.0\refint\Collaboration.Domain.dll
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Domain\obj\Debug\net8.0\Collaboration.Domain.pdb
+C:\Users\taii le mehdi\Desktop\Collaborationv1\Collaboration\Collaboration.Domain\obj\Debug\net8.0\ref\Collaboration.Domain.dll

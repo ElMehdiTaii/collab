@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "DQ75G2StxP0=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\taii le mehdi\\Desktop\\Collaborationv1\\Collaboration\\Collaboration.Application\\Collaboration.Application.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\taii le mehdi\\.nuget\\packages\\fluentvalidation\\11.11.0\\fluentvalidation.11.11.0.nupkg.sha512",
+    "C:\\Users\\taii le mehdi\\.nuget\\packages\\mediatr\\12.4.1\\mediatr.12.4.1.nupkg.sha512",
+    "C:\\Users\\taii le mehdi\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\taii le mehdi\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
