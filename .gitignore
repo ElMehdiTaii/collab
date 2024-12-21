@@ -65,3 +65,6 @@ Thumbs.db
 # Environment secrets
 .env
 .env.*
+/.vs/Collaboration/v17/.suo
+/.vs/Collaboration/v17/DocumentLayout.backup.json
+/.vs/Collaboration/DesignTimeBuild/.dtbcache.v2
