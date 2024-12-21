@@ -1,3 +1,3 @@
 ﻿namespace Collaboration.Domain.DTOs.Authentication;
 
-public record LockPasswordDto;
+public record LockPasswordDto(string Email);

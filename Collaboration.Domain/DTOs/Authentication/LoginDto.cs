@@ -1,3 +1,3 @@
 ﻿namespace Collaboration.Domain.DTOs.Authentication;
 
-public record LoginDto;
+public record LoginDto(string Email, string Password);

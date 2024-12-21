@@ -1,3 +1,3 @@
 ﻿namespace Collaboration.Domain.DTOs.Authentication;
 
-public class UpdatePasswordDto();
+public record UpdatePasswordDto(string Email, string Password);

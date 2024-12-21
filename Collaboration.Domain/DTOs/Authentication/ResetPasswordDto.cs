@@ -1,3 +1,3 @@
 ﻿namespace Collaboration.Domain.DTOs.Authentication;
 
-public record ResetPasswordDto();
+public record ResetPasswordDto(string Email);
