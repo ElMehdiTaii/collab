@@ -26,7 +26,8 @@ public class AuthenticationController(IMapper _mapper, IMediator _mediator) : Co
         {
             var query = _mapper.Map<AuthenticationQuery>(loginDto);
             var result = await _mediator.Send(query);
-            await SetUpCookiesAsync(_mapper.Map<UserInformationDto>(result), loginDto.RememberMe);
+            var userInfo = _mapper.Map<UserInformationDto>(result.Data);
+            await SetUpCookiesAsync(userInfo, loginDto.RememberMe);
             return RedirectToAction("Index", "Dashboard");
         }
         catch (Exception ex)
@@ -112,7 +113,7 @@ public class AuthenticationController(IMapper _mapper, IMediator _mediator) : Co
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, userInformationDto.Name),
+            new Claim(ClaimTypes.Name, userInformationDto.UserName),
             new Claim(ClaimTypes.Email, userInformationDto.Email),
             new Claim("Roles", userInformationDto.Roles.ToString()!),
         };

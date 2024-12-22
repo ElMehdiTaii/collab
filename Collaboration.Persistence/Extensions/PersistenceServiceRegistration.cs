@@ -13,7 +13,7 @@ public static class PersistenceServiceRegistration
     {
         services.AddDbContext<CollaborationDatabaseContext>(options =>
         {
-            options.UseSqlServer(configuration.GetConnectionString(""));
+            options.UseSqlServer(configuration.GetConnectionString("DBMainConnectionString"));
         });
 
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

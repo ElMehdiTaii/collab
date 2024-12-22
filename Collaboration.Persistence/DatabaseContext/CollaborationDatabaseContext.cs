@@ -1,6 +1,6 @@
 ﻿using Collaboration.Domain.Entities;
+using Collaboration.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
-using Version = Collaboration.Domain.Entities.Version;
 
 namespace Collaboration.Persistence.DatabaseContext;
 
@@ -15,29 +15,26 @@ public class CollaborationDatabaseContext : DbContext
     public DbSet<Document> Document { get; set; }
     public DbSet<DocumentNote> DocumentComment { get; set; }
     public DbSet<Folder> Folder { get; set; }
-    public DbSet<FolderComment> FolderComment { get; set; }
+    public DbSet<FolderNote> FolderComment { get; set; }
     public DbSet<Tag> Tag { get; set; }
-    public DbSet<Version> Version { get; set; }
+    public DbSet<Domain.Entities.Version> Version { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CollaborationDatabaseContext).Assembly);
+        modelBuilder.ApplyConfiguration(new BoardConfiguration());
+        modelBuilder.ApplyConfiguration(new DocumentConfiguration());
+        //modelBuilder.ApplyConfiguration(new DocumentNoteConfiguration());
+        modelBuilder.ApplyConfiguration(new FolderConfiguration());
+        modelBuilder.ApplyConfiguration(new FolderNoteConfiguration());
+        modelBuilder.ApplyConfiguration(new TagConfiguration());
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new VersionConfiguration());
         base.OnModelCreating(modelBuilder);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        //foreach (var entry in base.ChangeTracker.Entries<BaseEntity>()
-        //    .Where(q => q.State == EntityState.Added || q.State == EntityState.Modified))
-        //{
-        //    entry.Entity.DateModified = DateTime.Now;
-        //    entry.Entity.ModifiedBy = _userService.UserId;
-        //    if (entry.State == EntityState.Added)
-        //    {
-        //        entry.Entity.DateCreated = DateTime.Now;
-        //        entry.Entity.CreatedBy = _userService.UserId;
-        //    }
-        //}
         return base.SaveChangesAsync(cancellationToken);
     }
 }

@@ -4,10 +4,4 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Collaboration.Persistence.Configurations;
 
-public class DocumentNoteConfiguration : IEntityTypeConfiguration<DocumentNote>
-{
-    public void Configure(EntityTypeBuilder<DocumentNote> builder)
-    {
-        throw new NotImplementedException();
-    }
-}
+public class DocumentNoteConfiguration;

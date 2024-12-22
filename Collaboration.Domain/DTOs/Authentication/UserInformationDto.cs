@@ -1,3 +1,8 @@
 ﻿namespace Collaboration.Domain.DTOs.Authentication;
 
-public record UserInformationDto(string Name, string Email, string[] Roles);
+public record UserInformationDto
+{
+    public string UserName { get; set; } = null!;
+    public string Email { get; set; } = null!;
+    public int[] Roles { get; set; } = [];
+}

@@ -15,16 +15,29 @@ public class AuthenticationQueryHandler(IUserRepository userRepository, IPasswor
     {
         Domain.Entities.User user = await userRepository.GetAsync(request.Email) ??
             throw new BadRequestException("Adresse email ou mot de passe invalide. Veuillez réessayer.");
+
+        if (user.IsDeleted)
+        {
+            throw new BadRequestException("Adresse email ou mot de passe invalide. Veuillez réessayer.");
+        }
+
         if (!passwordHasherService.VerifyPasswordHash(request.Password, user.PasswordHash!, user.PasswordSalt!))
         {
             throw new BadRequestException("Adresse email ou mot de passe invalide. Veuillez réessayer.");
         }
-        await emailSender.SendEmail(new Domain.Models.EmailMessage
+
+        if (user.IsLocked)
         {
-            To = request.Email,
-            Subject = Constant.SendEmailRestPasswordSucceedObject,
-            Body = Constant.SendEmailRestPasswordSucceedBody
-        });
+            throw new BadRequestException("Votre compte est verrouillé. Veuillez contacter l'administrateur.");
+        }
+
+        //await emailSender.SendEmail(new Domain.Models.EmailMessage
+        //{
+        //    To = request.Email,
+        //    Subject = Constant.SendEmailRestPasswordSucceedObject,
+        //    Body = Constant.SendEmailRestPasswordSucceedBody
+        //});
+
         return new Response(string.Empty, user);
     }
 }
