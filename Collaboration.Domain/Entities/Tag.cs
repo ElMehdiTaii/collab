@@ -4,13 +4,13 @@ namespace Collaboration.Domain.Entities;
 
 public class Tag : BaseEntity
 {
-    public string? Name { get; set; }
+    public string Name { get; set; } = null!;
 
-    public int? AccountId { get; set; }
+    public int AccountId { get; set; }
 
     public virtual Account Account { get; set; } = null!;
 
-    public virtual ICollection<Document> DocumentTags { get; set; } = [];
+    public virtual ICollection<Document> TDocuments { get; set; } = [];
 
-    public virtual ICollection<Folder> TFolderTags { get; set; } = [];
+    public virtual ICollection<Folder> TFolders { get; set; } = [];
 }

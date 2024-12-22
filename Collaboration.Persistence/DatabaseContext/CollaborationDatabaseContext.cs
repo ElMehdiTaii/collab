@@ -13,7 +13,7 @@ public class CollaborationDatabaseContext : DbContext
     public DbSet<User> User { get; set; }
     public DbSet<Account> Account { get; set; }
     public DbSet<Document> Document { get; set; }
-    public DbSet<DocumentComment> DocumentComment { get; set; }
+    public DbSet<DocumentNote> DocumentComment { get; set; }
     public DbSet<Folder> Folder { get; set; }
     public DbSet<FolderComment> FolderComment { get; set; }
     public DbSet<Tag> Tag { get; set; }

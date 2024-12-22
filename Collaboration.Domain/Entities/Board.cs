@@ -1,8 +1,20 @@
-﻿namespace Collaboration.Domain.Entities;
+﻿using Collaboration.Domain.Common;
 
-public class Board
+namespace Collaboration.Domain.Entities;
+
+public class Board : BaseEntity
 {
-    public int Id { get; set; }
-    public string Name { get; set; } = null!;
-    public bool Private { get; set; }
+    public string Title { get; set; } = null!;
+
+    public bool IsPublic { get; set; }
+
+    public bool IsArchived { get; set; }
+
+    public bool IsLocked { get; set; }
+
+    public bool IsFavorite { get; set; }
+
+    public int AccountId { get; set; }
+
+    public virtual Account Account { get; set; } = null!;
 }
