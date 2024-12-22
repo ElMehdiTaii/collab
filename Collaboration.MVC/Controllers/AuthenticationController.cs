@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Collaboration.Application.Exceptions;
 using Collaboration.Application.Features.Authentication.Commands.ResetPasswordCommand;
 using Collaboration.Application.Features.Authentication.Commands.SendResetPasswordMailCommand;
 using Collaboration.Application.Features.Authentication.Queries.AuthenticationQuery;
@@ -30,10 +31,14 @@ public class AuthenticationController(IMapper _mapper, IMediator _mediator) : Co
             await SetUpCookiesAsync(userInfo, loginDto.RememberMe);
             return RedirectToAction("Index", "Dashboard");
         }
-        catch (Exception ex)
+        catch (BadRequestException ex)
         {
             ViewBag.ErrorMessage = ex.Message;
             return View(loginDto);
+        }
+        catch (Exception)
+        {
+            return RedirectToAction("Index","Error");
         }
     }
 
