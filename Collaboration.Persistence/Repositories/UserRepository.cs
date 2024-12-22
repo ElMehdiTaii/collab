@@ -11,7 +11,6 @@ public class UserRepository(CollaborationDatabaseContext context) : GenericRepos
     {
         return await _context.User
             .Include(a => a.Account)
-            //ThenInclude(c => c.AccountConfiguration)
             .FirstOrDefaultAsync(u => u.Email == email);
     }
 }

@@ -20,7 +20,7 @@ public class FolderController : Controller
     {
         return View();
     }
-    public IActionResult Stared()
+    public IActionResult Bookmark()
     {
         return View();
     }
