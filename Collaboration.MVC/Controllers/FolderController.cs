@@ -1,27 +1,123 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Collaboration.Application.Exceptions;
+using Collaboration.Application.Features.Folder.Commands.CreateFolderCommand;
+using Collaboration.Application.Features.Folder.Commands.DeleteFolderCommand;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Collaboration.MVC.Controllers;
 
-public class FolderController : Controller
+public class FolderController(IMapper _mapper, IMediator _mediator) : Controller
 {
     public IActionResult Index()
     {
         return View();
     }
-    public IActionResult Get()
+
+    [HttpGet]
+    public async Task<IActionResult> Get()
     {
-        return View();
+        try
+        {
+            return Json(await _mediator.Send(new GetLeaveAllocationListQuery()));
+        }
+        catch (BadRequestException ex)
+        {
+            return Json(ex.Message);
+        }
+        catch(Exception ex)
+        {
+            return Json(ex.Message);
+        }
     }
-    public IActionResult Update()
+
+    [HttpPost]
+    public async Task<IActionResult> Create()
     {
-        return View();
+        try
+        {
+            await _mediator.Send(new CreateFolderCommand());
+            return Ok();
+        }
+        catch (BadRequestException ex)
+        {
+            return Json(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Json(ex.Message);
+        }
     }
-    public IActionResult Delete()
+
+    [HttpPost]
+    public async Task<IActionResult> Update()
     {
-        return View();
+        try
+        {
+            await _mediator.Send(new CreateFolderCommand());
+            return Ok();
+        }
+        catch (BadRequestException ex)
+        {
+            return Json(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Json(ex.Message);
+        }
     }
-    public IActionResult Bookmark()
+
+    [HttpPost]
+    public async Task<IActionResult> Delete()
     {
-        return View();
+        try
+        {
+            await _mediator.Send(new DeleteFolderCommand());
+            return Ok();
+        }
+        catch (BadRequestException ex)
+        {
+            return Json(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Json(ex.Message);
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Bookmark()
+    {
+        try
+        {
+            await _mediator.Send(new CreateFolderCommand());
+            return Ok();
+        }
+        catch (BadRequestException ex)
+        {
+            return Json(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Json(ex.Message);
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Archive()
+    {
+        try
+        {
+            await _mediator.Send(new CreateFolderCommand());
+            return Ok();
+        }
+        catch (BadRequestException ex)
+        {
+            return Json(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Json(ex.Message);
+        }
     }
 }

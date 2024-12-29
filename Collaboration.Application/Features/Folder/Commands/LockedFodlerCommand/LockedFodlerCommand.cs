@@ -1,5 +1,5 @@
-﻿namespace Collaboration.Application.Features.Folder.Commands.LockedFodlerCommand;
+﻿using MediatR;
 
-public class LockedFodlerCommand
-{
-}
+namespace Collaboration.Application.Features.Folder.Commands.LockedFodlerCommand;
+
+public record LockedFodlerCommand : IRequest<bool>;

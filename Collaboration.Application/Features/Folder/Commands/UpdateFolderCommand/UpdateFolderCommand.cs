@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
-namespace Collaboration.Application.Features.Folder.Commands.UpdateFolderCommand
-{
-    internal class UpdateFolderCommand
-    {
-    }
-}
+namespace Collaboration.Application.Features.Folder.Commands.UpdateFolderCommand;
+
+public record UpdateFolderCommand : IRequest<bool>;

@@ -57,10 +57,14 @@ public class AuthenticationController(IMapper _mapper, IMediator _mediator) : Co
             var result = await _mediator.Send(command);
             return RedirectToAction("Success");
         }
-        catch (Exception ex)
+        catch (BadRequestException ex)
         {
             ViewBag.ErrorMessage = ex.Message;
             return View(resetPasswordDto);
+        }
+        catch (Exception)
+        {
+            return RedirectToAction("Index", "Error");
         }
     }
 
@@ -79,10 +83,14 @@ public class AuthenticationController(IMapper _mapper, IMediator _mediator) : Co
             var result = await _mediator.Send(command);
             return RedirectToAction("Login");
         }
-        catch (Exception ex)
+        catch (BadRequestException ex)
         {
             ViewBag.ErrorMessage = ex.Message;
             return View(updatePasswordDto);
+        }
+        catch (Exception)
+        {
+            return RedirectToAction("Index", "Error");
         }
     }
 

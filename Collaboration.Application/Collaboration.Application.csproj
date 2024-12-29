@@ -11,12 +11,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Board\Commands\" />
+    <Folder Include="Features\Board\Queries\" />
     <Folder Include="Features\Document\Commands\ArchiveDocumentCommand\" />
     <Folder Include="Features\Document\Queries\GetDocumentsQuery\" />
     <Folder Include="Features\Document\Queries\GetArchivedDocumentQuery\" />
-    <Folder Include="Features\Folder\Commands\ArchiveFolderCommand\" />
     <Folder Include="Features\Folder\Queries\GetFoldersQuery\" />
     <Folder Include="Features\Folder\Queries\ArchiveFolderCommand\" />
+    <Folder Include="Features\Task\Commands\" />
+    <Folder Include="Features\Task\Queries\" />
     <Folder Include="MappingProfiles\" />
   </ItemGroup>
 

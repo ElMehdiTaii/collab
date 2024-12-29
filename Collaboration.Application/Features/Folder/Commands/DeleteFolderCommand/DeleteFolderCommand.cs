@@ -1,5 +1,5 @@
-﻿namespace Collaboration.Application.Features.Folder.Commands.DeleteFolderCommand;
+﻿using MediatR;
 
-public class DeleteFolderCommand
-{
-}
+namespace Collaboration.Application.Features.Folder.Commands.DeleteFolderCommand;
+
+public record DeleteFolderCommand : IRequest<bool>;

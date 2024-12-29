@@ -1,3 +1,5 @@
-﻿namespace Collaboration.Application.Features.Folder.Commands.CreateFolderCommand;
+﻿using MediatR;
 
-public record CreateFolderCommand();
+namespace Collaboration.Application.Features.Folder.Commands.CreateFolderCommand;
+
+public record CreateFolderCommand() : IRequest<bool>;
