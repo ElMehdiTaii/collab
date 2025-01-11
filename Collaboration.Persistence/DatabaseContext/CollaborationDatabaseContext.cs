@@ -18,6 +18,11 @@ public class CollaborationDatabaseContext : DbContext
     public DbSet<FolderNote> FolderComment { get; set; }
     public DbSet<Tag> Tag { get; set; }
     public DbSet<Domain.Entities.Version> Version { get; set; }
+    public DbSet<Board> Board { get; set; }
+    public DbSet<Domain.Entities.Task> Task { get; set; }
+    public DbSet<TaskAttachement> TaskAttachement { get; set; }
+
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

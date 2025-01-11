@@ -19,15 +19,15 @@ public class FolderController(IMapper _mapper, IMediator _mediator) : Controller
     {
         try
         {
-            return Json(await _mediator.Send(new GetLeaveAllocationListQuery()));
+            return Ok(await _mediator.Send(new()));
         }
-        catch (BadRequestException ex)
+        catch (Exception ex)
         {
-            return Json(ex.Message);
-        }
-        catch(Exception ex)
-        {
-            return Json(ex.Message);
+            return Problem(
+                detail: ex.Message,
+                statusCode: 500,
+                title: "An unexpected error occurred."
+            );
         }
     }
 
@@ -41,11 +41,15 @@ public class FolderController(IMapper _mapper, IMediator _mediator) : Controller
         }
         catch (BadRequestException ex)
         {
-            return Json(ex.Message);
+            return BadRequest(new { message = ex.Message });
         }
         catch (Exception ex)
         {
-            return Json(ex.Message);
+            return Problem(
+                detail: ex.Message,
+                statusCode: 500,
+                title: "An unexpected error occurred."
+            );
         }
     }
 
@@ -59,11 +63,15 @@ public class FolderController(IMapper _mapper, IMediator _mediator) : Controller
         }
         catch (BadRequestException ex)
         {
-            return Json(ex.Message);
+            return BadRequest(new { message = ex.Message });
         }
         catch (Exception ex)
         {
-            return Json(ex.Message);
+            return Problem(
+                detail: ex.Message,
+                statusCode: 500,
+                title: "An unexpected error occurred."
+            );
         }
     }
 
@@ -77,11 +85,15 @@ public class FolderController(IMapper _mapper, IMediator _mediator) : Controller
         }
         catch (BadRequestException ex)
         {
-            return Json(ex.Message);
+            return BadRequest(new { message = ex.Message });
         }
         catch (Exception ex)
         {
-            return Json(ex.Message);
+            return Problem(
+                detail: ex.Message,
+                statusCode: 500,
+                title: "An unexpected error occurred."
+            );
         }
     }
 
@@ -95,11 +107,15 @@ public class FolderController(IMapper _mapper, IMediator _mediator) : Controller
         }
         catch (BadRequestException ex)
         {
-            return Json(ex.Message);
+            return BadRequest(new { message = ex.Message });
         }
         catch (Exception ex)
         {
-            return Json(ex.Message);
+            return Problem(
+                detail: ex.Message,
+                statusCode: 500,
+                title: "An unexpected error occurred."
+            );
         }
     }
 
@@ -113,11 +129,15 @@ public class FolderController(IMapper _mapper, IMediator _mediator) : Controller
         }
         catch (BadRequestException ex)
         {
-            return Json(ex.Message);
+            return BadRequest(new { message = ex.Message });
         }
         catch (Exception ex)
         {
-            return Json(ex.Message);
+            return Problem(
+                detail: ex.Message,
+                statusCode: 500,
+                title: "An unexpected error occurred."
+            );
         }
     }
 }

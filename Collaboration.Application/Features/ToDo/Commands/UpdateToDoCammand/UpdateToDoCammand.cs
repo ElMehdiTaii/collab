@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
-namespace Collaboration.Application.Features.ToDo.Commands.UpdateToDoCammand
-{
-    internal class UpdateToDoCammand
-    {
-    }
-}
+namespace Collaboration.Application.Features.ToDo.Commands.UpdateToDoCammand;
+public record UpdateToDoCammand(Domain.Entities.ToDo toDo) : IRequest<bool>;

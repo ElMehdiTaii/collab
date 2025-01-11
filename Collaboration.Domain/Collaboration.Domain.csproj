@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="DTOs\Version\" />
+    <Folder Include="DTOs\Tag\" />
     <Folder Include="Extensions\" />
   </ItemGroup>
 

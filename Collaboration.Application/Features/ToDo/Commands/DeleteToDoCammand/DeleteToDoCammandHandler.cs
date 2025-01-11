@@ -1,3 +1,5 @@
-﻿namespace Collaboration.Application.Features.ToDo.Commands.DeleteToDoCammand;
+﻿using MediatR;
 
-internal class DeleteToDoCammandHandler;
+namespace Collaboration.Application.Features.ToDo.Commands.DeleteToDoCammand;
+
+public record DeleteToDoCammandHandler(int Id) : IRequest<bool>;

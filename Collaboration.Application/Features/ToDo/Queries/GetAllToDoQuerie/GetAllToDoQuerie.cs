@@ -1,3 +1,5 @@
-﻿namespace Collaboration.Application.Features.ToDo.Queries.GetAllToDoQuerie;
+﻿using MediatR;
 
-public record GetAllToDoQuerie();
+namespace Collaboration.Application.Features.ToDo.Queries.GetAllToDoQuerie;
+
+public record GetAllToDoQuerie() : IRequest<bool>;
