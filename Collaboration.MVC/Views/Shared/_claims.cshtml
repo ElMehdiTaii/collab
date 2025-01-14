@@ -1,0 +1,1 @@
+﻿<div id="user-claims" data-claims='@Html.Raw(Json.Serialize(User.Claims.Select(c => new { c.Type, c.Value })))'></div>

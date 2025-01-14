@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
-using Collaboration.Application.Features.Board.Commands.CreateBoardCommand;
-using Collaboration.Application.Features.Board.Queries.GetAllBoardQuery;
 using Collaboration.Application.Features.Task.Commands.CreateTaskCommand;
 using Collaboration.Application.Features.Task.Commands.UpdateTaskCommand;
 using Collaboration.Application.Features.Task.Queries;
-using Collaboration.Domain.DTOs.Board;
 using Collaboration.Domain.DTOs.Task;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

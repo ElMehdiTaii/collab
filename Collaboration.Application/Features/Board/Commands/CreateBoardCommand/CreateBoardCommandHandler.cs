@@ -12,7 +12,8 @@ public class CreateBoardCommandHandler(IBoardRepository boardRepository) : IRequ
         Domain.Entities.Board board = new()
         {
             Title = request.Title,
-            Description = request.Description
+            Discription = request.Description,
+            AccountId = 1
         };
 
         if (await boardRepository.CreateBoardAsync(board))

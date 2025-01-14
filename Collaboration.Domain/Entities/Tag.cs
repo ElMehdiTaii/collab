@@ -10,7 +10,7 @@ public class Tag : BaseEntity
 
     public virtual Account Account { get; set; } = null!;
 
-    public virtual ICollection<Document> TDocuments { get; set; } = [];
+    public virtual ICollection<Document> Documents { get; set; } = [];
 
-    public virtual ICollection<Folder> TFolders { get; set; } = [];
+    public virtual ICollection<Folder> Folders { get; set; } = [];
 }

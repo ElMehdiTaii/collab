@@ -17,7 +17,7 @@ internal class FolderConfiguration : IEntityTypeConfiguration<Folder>
                .HasColumnType("datetime");
 
         builder.HasOne(d => d.Account)
-               .WithMany(p => p.TFolders)
+               .WithMany(p => p.Folders)
                .HasForeignKey(d => d.AccountId)
                .OnDelete(DeleteBehavior.ClientSetNull)
                .HasConstraintName("FK__T_Folder__Accoun__571DF1D5");
@@ -28,7 +28,7 @@ internal class FolderConfiguration : IEntityTypeConfiguration<Folder>
                .HasConstraintName("FK__T_Folder__Folder__5629CD9C");
 
         builder.HasOne(d => d.Tag)
-               .WithMany(p => p.TFolders)
+               .WithMany(p => p.Folders)
                .HasForeignKey(d => d.TagId)
                .HasConstraintName("FK__T_Folder__TagId__5535A963");
 

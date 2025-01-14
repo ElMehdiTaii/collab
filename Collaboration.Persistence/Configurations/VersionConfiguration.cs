@@ -16,7 +16,7 @@ public class VersionConfiguration : IEntityTypeConfiguration<Domain.Entities.Ver
                .IsUnicode(false);
 
         builder.HasOne(d => d.Account)
-               .WithMany(p => p.TVersions)
+               .WithMany(p => p.Versions)
                .HasForeignKey(d => d.AccountId)
                .OnDelete(DeleteBehavior.ClientSetNull)
                .HasConstraintName("FK__T_Version__Accou__5165187F");

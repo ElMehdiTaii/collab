@@ -21,5 +21,12 @@ public class User : BaseEntity
 
     public virtual Account Account { get; set; } = null!;
 
-    public virtual ICollection<FolderNote> TFolderNotes { get; set; } = [];
+    public virtual ICollection<FolderNote> FolderNotes { get; set; } = [];
+
+    public virtual ICollection<Task> Tasks { get; set; } = [];
+
+    public virtual ICollection<UserGroup> UserGroups { get; set; } = [];
+
+    public virtual ICollection<UserRole> UserRoles { get; set; } = [];
+
 }

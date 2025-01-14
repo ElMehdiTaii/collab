@@ -14,12 +14,12 @@ public class FolderNoteConfiguration : IEntityTypeConfiguration<FolderNote>
 
         builder.Property(e => e.CreatedAt).HasColumnType("datetime");
 
-        builder.HasOne(d => d.CreatedByNavigation).WithMany(p => p.TFolderNotes)
+        builder.HasOne(d => d.CreatedByNavigation).WithMany(p => p.FolderNotes)
             .HasForeignKey(d => d.CreatedBy)
             .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("FK__T_FolderN__Creat__59FA5E80");
 
-        builder.HasOne(d => d.Folder).WithMany(p => p.TFolderNotes)
+        builder.HasOne(d => d.Folder).WithMany(p => p.FolderNotes)
             .HasForeignKey(d => d.FolderId)
             .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("FK__T_FolderN__Folde__5AEE82B9");

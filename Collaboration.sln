@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35431.28
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collaboration.MVC", "Collaboration.MVC\Collaboration.MVC.csproj", "{BC394ED0-87D3-4CBB-A614-78E01C5CAE20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collaboration.Domain", "Collaboration.Domain\Collaboration.Domain.csproj", "{25743B5A-5229-401E-8678-2D5D92B78A82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collaboration.Domain", "Collaboration.Domain\Collaboration.Domain.csproj", "{25743B5A-5229-401E-8678-2D5D92B78A82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collaboration.Application", "Collaboration.Application\Collaboration.Application.csproj", "{F844C063-0EF3-44F7-BB51-E39A86FC8DCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collaboration.Application", "Collaboration.Application\Collaboration.Application.csproj", "{F844C063-0EF3-44F7-BB51-E39A86FC8DCD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collaboration.Infrastructure", "Collaboration.Infrastructure\Collaboration.Infrastructure.csproj", "{B3FEDBE2-FC62-4476-AF61-B1EF0BA55AB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collaboration.Infrastructure", "Collaboration.Infrastructure\Collaboration.Infrastructure.csproj", "{B3FEDBE2-FC62-4476-AF61-B1EF0BA55AB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collaboration.Persistence", "Collaboration.Persistence\Collaboration.Persistence.csproj", "{20C3687C-30AB-4769-B9E6-E66C68708089}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collaboration.Persistence", "Collaboration.Persistence\Collaboration.Persistence.csproj", "{20C3687C-30AB-4769-B9E6-E66C68708089}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collaboration.MVC", "Collaboration.MVC\Collaboration.MVC.csproj", "{E316D6F3-872E-42B5-8FDA-C4D7E38DE7FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BC394ED0-87D3-4CBB-A614-78E01C5CAE20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BC394ED0-87D3-4CBB-A614-78E01C5CAE20}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BC394ED0-87D3-4CBB-A614-78E01C5CAE20}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BC394ED0-87D3-4CBB-A614-78E01C5CAE20}.Release|Any CPU.Build.0 = Release|Any CPU
 		{25743B5A-5229-401E-8678-2D5D92B78A82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{25743B5A-5229-401E-8678-2D5D92B78A82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25743B5A-5229-401E-8678-2D5D92B78A82}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{20C3687C-30AB-4769-B9E6-E66C68708089}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20C3687C-30AB-4769-B9E6-E66C68708089}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20C3687C-30AB-4769-B9E6-E66C68708089}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E316D6F3-872E-42B5-8FDA-C4D7E38DE7FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E316D6F3-872E-42B5-8FDA-C4D7E38DE7FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E316D6F3-872E-42B5-8FDA-C4D7E38DE7FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E316D6F3-872E-42B5-8FDA-C4D7E38DE7FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

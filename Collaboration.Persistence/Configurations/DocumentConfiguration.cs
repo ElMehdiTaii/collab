@@ -26,18 +26,18 @@ internal class DocumentConfiguration : IEntityTypeConfiguration<Document>
                 .IsUnicode(false);
 
         builder.HasOne(d => d.Account)
-               .WithMany(p => p.TDocuments)
+               .WithMany(p => p.Documents)
                .HasForeignKey(d => d.AccountId)
                .OnDelete(DeleteBehavior.ClientSetNull)
                .HasConstraintName("FK__T_Documen__Accou__60A75C0F");
 
         builder.HasOne(d => d.Folder)
-               .WithMany(p => p.TDocuments)
+               .WithMany(p => p.Documents)
                .HasForeignKey(d => d.FolderId)
                .HasConstraintName("FK__T_Documen__Folde__5FB337D6");
 
         builder.HasOne(d => d.Tag)
-               .WithMany(p => p.TDocuments)
+               .WithMany(p => p.Documents)
                .HasForeignKey(d => d.TagId)
                .HasConstraintName("FK__T_Documen__TagId__5EBF139D");
 

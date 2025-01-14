@@ -16,9 +16,11 @@ public static class PersistenceServiceRegistration
             options.UseSqlServer(configuration.GetConnectionString("DBMainConnectionString"));
         });
 
-        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-
-        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>))
+                .AddScoped<IUserRepository, UserRepository>()
+                .AddScoped<IBoardRepository, BoardRepository>()
+                .AddScoped<ITaskRepository, TaskRepository>()
+                .AddScoped<ITaskAttachementRepository, TaskAttachementRepository>();
 
         return services;
     }

@@ -17,7 +17,9 @@ public sealed class BoardRepository(CollaborationDatabaseContext context) : Gene
     {
         return await _context.Board
             .Include(b => b.Tasks)
+            .ThenInclude(u => u.User)
             .Where(b => b.AccountId == accountId)
+            .OrderDescending()
             .ToListAsync();
     }
 }

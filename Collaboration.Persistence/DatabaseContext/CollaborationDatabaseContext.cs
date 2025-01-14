@@ -35,6 +35,8 @@ public class CollaborationDatabaseContext : DbContext
         modelBuilder.ApplyConfiguration(new TagConfiguration());
         modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new VersionConfiguration());
+        modelBuilder.ApplyConfiguration(new TaskConfiguration());
+
         base.OnModelCreating(modelBuilder);
     }
 

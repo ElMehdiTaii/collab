@@ -1,8 +1,97 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewBag.pageTitle = "Board";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+@section styles {
+    <link rel="stylesheet" href="~/assets/libs/dragula/dragula.min.css" />
+}
 
+<div class="card">
+    <div class="card-body">
+        <div class="row g-2">
+            <div class="col-lg-auto">
+                <div class="hstack gap-2">
+                    <button class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#createboardModal">
+                        <i class="ri-add-line align-bottom me-1"></i> Create Board
+                    </button>
+                </div>
+            </div>
+            <div class="col-lg-3 col-auto">
+                <div class="search-box">
+                    <input type="text" class="form-control search" id="search-task-options" placeholder="Search for board">
+                    <i class="ri-search-line search-icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="boardList">
+
+
+</div>
+
+<div class="modal fade" id="createboardModal" tabindex="-1" aria-labelledby="createboardModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0">
+            <div class="modal-header p-3 bg-info-subtle">
+                <h5 class="modal-title" id="createboardModalLabel">Add Board</h5>
+                <button type="button" class="btn-close" id="addBoardBtn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="#" id="createBoardForm">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label for="boardTitle" class="form-label">Board Title</label>
+                            <input type="text" class="form-control" name="title" id="boardTitle"
+                                   placeholder="Enter board name">
+                        </div>
+                        <div class="col-lg-12">
+                            <label for="boardDescription" class="form-label">Board Description</label>
+                            <textarea rows="3" type="text" class="form-control" name="description" id="boardDescription"
+                                   placeholder="Enter board description"></textarea>
+                        </div>
+                        <div class="mt-4">
+                            <div class="hstack gap-2 justify-content-end">
+                                <button type="button" class="btn btn-light"
+                                        data-bs-dismiss="modal">
+                                    Close
+                                </button>
+                                <button type="submit" class="btn btn-success" id="addNewBoard">
+                                    Add
+                                    Board
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end add board modal-->
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- dragula init js -->
+    <script src="~/assets/libs/dragula/dragula.min.js"></script>
+
+    <script src="~/assets/js/pages/board-list.init.js"></script>
+
+    <!-- dom autoscroll -->
+    <script src="~/assets/libs/dom-autoscroller/dom-autoscroller.min.js"></script>
+
+    <!--taks-kanban-->
+    @* <script src="~/assets/js/pages/tasks-kanban.init.js"></script> *@
+
+    <!-- App js -->
+    <script src="~/assets/js/app.js"></script>
+    <script>
+       
+    </script>
+}

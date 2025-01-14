@@ -33,9 +33,9 @@ public class Folder : BaseEntity
 
     public virtual ICollection<Folder> InverseFolderMain { get; set; } = [];
 
-    public virtual ICollection<Document> TDocuments { get; set; } = [];
+    public virtual ICollection<Document> Documents { get; set; } = [];
 
-    public virtual ICollection<FolderNote> TFolderNotes { get; set; } = [];
+    public virtual ICollection<FolderNote> FolderNotes { get; set; } = [];
     public virtual Tag? Tag { get; set; }
 
     public virtual Version? Version { get; set; }

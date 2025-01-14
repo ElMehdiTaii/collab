@@ -5,6 +5,8 @@ using Collaboration.Application.Features.Board.Queries.GetAllBoardQuery;
 using Collaboration.Domain.DTOs.Board;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics.Metrics;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Collaboration.MVC.Controllers;
 
@@ -20,7 +22,8 @@ public class BoardController(IMapper _mapper, IMediator _mediator) : Controller
     {
         try
         {
-            return Ok(await _mediator.Send(new GetAllBoardQuery()));
+            var query = await _mediator.Send(new GetAllBoardQuery());
+            return Ok(_mapper.Map<List<GetAllBoardDto>>(query.ToList()));
         }
         catch (BadRequestException ex)
         {
@@ -37,13 +40,13 @@ public class BoardController(IMapper _mapper, IMediator _mediator) : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(CreateBoardDto createBoardDto)
+    public async Task<IActionResult> Create([FromBody] CreateBoardDto createBoardDto)
     {
         try
         {
             var command = _mapper.Map<CreateBoardCommand>(createBoardDto);
             var result = await _mediator.Send(command);
-            return Ok(result.Message);
+            return Ok(new { message = result.Message });
         }
         catch (BadRequestException ex)
         {

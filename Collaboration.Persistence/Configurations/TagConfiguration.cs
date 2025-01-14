@@ -17,7 +17,7 @@ public class TagConfiguration : IEntityTypeConfiguration<Tag>
                .IsUnicode(false);
 
         builder.HasOne(d => d.Account)
-               .WithMany(p => p.TTags)
+               .WithMany(p => p.Tags)
                .HasForeignKey(d => d.AccountId)
                .OnDelete(DeleteBehavior.ClientSetNull)
                .HasConstraintName("FK__T_Tag__AccountId__4E88ABD4");
