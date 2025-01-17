@@ -19,6 +19,37 @@ if (removeProduct) {
     });
 }
 
+Array.from(document.getElementsByClassName("select-element")).forEach(function (elem) {
+    Array.from(elem.querySelectorAll(".dropdown-menu ul li a")).forEach(function (subElem) {
+        subElem.addEventListener("click", function () {
+            subElem.classList.toggle("active");
+            var assigneeMember = document.querySelectorAll('.select-element .dropdown-menu .dropdown-item.active');
+            document.getElementById("total-assignee").innerHTML = assigneeMember.length;
+
+            var imgPath = subElem.querySelector(".avatar-xxs img").getAttribute('src');
+
+            var folderListdata = document.getElementById("assignee-member");
+            if (subElem.classList.contains("active")) {
+                var nameelem = subElem.querySelector(".flex-grow-1").innerHTML;
+
+                folderlisthtml =
+                    '<a href="javascript: void(0);" class="avatar-group-item mb-2" data-img="' + imgPath + '"  data-bs-toggle="tooltip" data -bs-placement="top" title="' + nameelem + '">\
+                <img src="'+ imgPath + '" alt="" class="rounded-circle avatar-xs" />\
+                </a>';
+                folderListdata.insertAdjacentHTML("beforeend", folderlisthtml);
+                tooltipElm();
+            } else {
+                Array.from(folderListdata.querySelectorAll(".avatar-group-item")).forEach(function (item) {
+                    var avatarImg = item.getAttribute('data-img');
+                    if (imgPath == avatarImg) {
+                        item.remove();
+                    }
+                });
+            }
+        });
+    });
+});
+
 $(document).ready(() => {
     $('#createBoardForm').on('submit', async (e) => {
         e.preventDefault();
@@ -178,3 +209,4 @@ $(document).ready(() => {
         }
     }
 });
+
