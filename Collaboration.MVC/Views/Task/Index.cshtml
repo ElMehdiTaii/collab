@@ -1,0 +1,245 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Tasks List</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Tasks</a></li>
+                    <li class="breadcrumb-item active">Tasks List</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<input type="hidden" id="boardId" value="@ViewBag.BoardId" />
+
+<div class="row">
+    <div class="col-xxl-3 col-sm-6">
+        <div class="card card-animate">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="fw-medium text-muted mb-0">Total Tasks</p>
+                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="234">0</span>k</h2>
+                        <p class="mb-0 text-muted">
+                            <span class="badge bg-light text-success mb-0">
+                                <i class="ri-arrow-up-line align-middle"></i> 17.32 %
+                            </span> vs. previous month
+                        </p>
+                    </div>
+                    <div>
+                        <div class="avatar-sm flex-shrink-0">
+                            <span class="avatar-title bg-info-subtle text-info rounded-circle fs-4">
+                                <i class="ri-ticket-2-line"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+    <div class="col-xxl-3 col-sm-6">
+        <div class="card card-animate">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="fw-medium text-muted mb-0">Pending Tasks</p>
+                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="64.5">0</span>k</h2>
+                        <p class="mb-0 text-muted">
+                            <span class="badge bg-light text-danger mb-0">
+                                <i class="ri-arrow-down-line align-middle"></i> 0.87 %
+                            </span> vs. previous month
+                        </p>
+                    </div>
+                    <div>
+                        <div class="avatar-sm flex-shrink-0">
+                            <span class="avatar-title bg-warning-subtle text-warning rounded-circle fs-4">
+                                <i class="mdi mdi-timer-sand"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-3 col-sm-6">
+        <div class="card card-animate">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="fw-medium text-muted mb-0">Completed Tasks</p>
+                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="116.21">0</span>K</h2>
+                        <p class="mb-0 text-muted">
+                            <span class="badge bg-light text-danger mb-0">
+                                <i class="ri-arrow-down-line align-middle"></i> 2.52 %
+                            </span> vs. previous month
+                        </p>
+                    </div>
+                    <div>
+                        <div class="avatar-sm flex-shrink-0">
+                            <span class="avatar-title bg-success-subtle text-success rounded-circle fs-4">
+                                <i class="ri-checkbox-circle-line"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-3 col-sm-6">
+        <div class="card card-animate">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="fw-medium text-muted mb-0">Closed Tasks</p>
+                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="14.84">0</span>%</h2>
+                        <p class="mb-0 text-muted">
+                            <span class="badge bg-light text-success mb-0">
+                                <i class="ri-arrow-up-line align-middle"></i> 0.63 %
+                            </span> vs. previous month
+                        </p>
+                    </div>
+                    <div>
+                        <div class="avatar-sm flex-shrink-0">
+                            <span class="avatar-title bg-danger-subtle text-danger rounded-circle fs-4">
+                                <i class="ri-delete-bin-line"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card" id="tasksList">
+            <div class="card-header border-0">
+                <div class="d-flex align-items-center">
+                    <h5 class="card-title mb-0 flex-grow-1">All Tasks</h5>
+                    <div class="flex-shrink-0">
+                        <div class="d-flex flex-wrap gap-2">
+                            <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Create Task</button>
+                            <button class="btn btn-soft-secondary" id="remove-actions" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive table-card mb-4">
+                    <table class="table align-middle table-nowrap mb-0" id="tasksTable">
+                        <thead class="table-light text-muted">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Assigned To</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list form-check-all">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade zoomIn" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0">
+            <div class="modal-header p-3 bg-info-subtle">
+                <h5 class="modal-title" id="exampleModalLabel">Create Task</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+            </div>
+            <form class="tablelist-form" autocomplete="off">
+                <div class="modal-body">
+                    <input type="hidden" id="tasksId" />
+                    <div class="row g-3">
+                        <div class="col-lg-12">
+                            <label for="taskTitle-field" class="form-label">Title</label>
+                            <input type="text" id="taskTilte-field" class="form-control" placeholder="Title" required />
+                        </div>
+                        <!--end col-->
+                        <div class="col-lg-12">
+                            <div>
+                                <label for="tasksDescription-field" class="form-label">Description</label>
+                                <input type="text" id="tasksDescription-field" class="form-control" placeholder="Description" required />
+                            </div>
+                        </div>
+                        <!--end col-->
+                        <div class="col-lg-6">
+                            <label for="taskAssignedTo-field" class="form-label">Assigned To</label>
+                            <select class="form-control" id="taskAssignedTo-field">
+                                <option value="">Assigned To</option>
+                            </select>
+                        </div>
+                        <!--end col-->
+                        <!--end col-->
+                        <div class="col-lg-6">
+                            <label for="taskStartDate-field" class="form-label">Start Date</label>
+                            <input type="date" id="taskStartDate-field" class="form-control" placeholder="Start date" required />
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="taskEndDate-field" class="form-label">End Date</label>
+                            <input type="date" id="taskEndDate-field" class="form-control" placeholder="End date" required />
+                        </div>
+                        <!--end col-->
+                        <div class="col-lg-6">
+                            <label for="task-status" class="form-label">Status</label>
+                            <select class="form-control" id="task-status">
+                                <option value="">Status</option>
+                                <option value="0">New</option>
+                                <option value="1">Open</option>
+                                <option value="2">In Progress</option>
+                                <option value="3">Completed</option>
+                                <option value="4">Closed</option>
+                            </select>
+                        </div>
+                        <!--end col-->
+                        <div class="col-lg-6">
+                            <label for="taskPriority-field" class="form-label">Priority</label>
+                            <select class="form-control" id="taskPriority-field">
+                                <option value="">Priority</option>
+                                <option value="0">High</option>
+                                <option value="1">Medium</option>
+                                <option value="2">Low</option>
+                            </select>
+                        </div>
+                        <!--end col-->
+                    </div>
+                    <!--end row-->
+                </div>
+                <div class="modal-footer">
+                    <div class="hstack gap-2 justify-content-end">
+                        <button type="button" class="btn btn-light" id="close-modal" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success" id="add-btn">Add Task</button>
+                        <!-- <button type="button" class="btn btn-success" id="edit-btn">Update Task</button> -->
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--end modal-->
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="~/assets/js/app/task.js"></script>
+    @* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+}
