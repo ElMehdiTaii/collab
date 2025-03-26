@@ -2,4 +2,4 @@
 
 namespace Collaboration.Application.Features.Board.Queries.GetAllBoardQuery;
 
-public record GetAllBoardQuery : IRequest<List<Domain.Entities.Board>>;
+public record GetAllBoardQuery(int[]? AssignedTo) : IRequest<List<Domain.Entities.Board>>;

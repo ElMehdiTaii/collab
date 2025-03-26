@@ -3,5 +3,5 @@ using MediatR;
 
 namespace Collaboration.Application.Features.Board.Commands.CreateBoardCommand;
 
-public record CreateBoardCommand(string Title,string Description)
+public record CreateBoardCommand(string Title,string Description, int[]? TasksId)
     : IRequest<Response>;

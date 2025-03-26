@@ -13,4 +13,12 @@ public class UserRepository(CollaborationDatabaseContext context) : GenericRepos
             .Include(a => a.Account)
             .FirstOrDefaultAsync(u => u.Email == email);
     }
+
+    public async Task<List<User>> GetUsersAsync(int accountId)
+    {
+        return await _context.User
+            .Include(a => a.Account)
+            .Where(u => u.AccountId == accountId)
+            .ToListAsync();
+    }
 }

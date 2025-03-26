@@ -12,14 +12,22 @@ public sealed class BoardRepository(CollaborationDatabaseContext context) : Gene
         _context.Add(board);
         return await _context.SaveChangesAsync() > 0;
     }
-
-    public async Task<List<Board>> GetAllBoardAsync(int accountId)
+    public async Task<Board?> GetBoardAsync(int id)
     {
         return await _context.Board
             .Include(b => b.Tasks)
-            .ThenInclude(u => u.User)
-            .Where(b => b.AccountId == accountId)
-            .OrderDescending()
-            .ToListAsync();
+            .ThenInclude(t => t.TaskAttachements)
+            .FirstOrDefaultAsync(b => b.Id == id);
+    }
+
+    public async Task<List<Board>> GetAllBoardAsync(int accountId, int[]? assignedTo)
+    {
+        return await _context.Board
+        .Include(b => b.Tasks)
+        .ThenInclude(u => u.User)
+        .Where(b => b.AccountId == accountId &&
+                    (assignedTo == null ||  (assignedTo != null && b.Tasks.Any(t => assignedTo.Contains(t.User.Id)))))
+        .OrderByDescending(b => b.Id)
+        .ToListAsync();
     }
 }

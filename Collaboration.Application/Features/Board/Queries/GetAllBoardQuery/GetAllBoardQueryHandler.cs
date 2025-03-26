@@ -11,7 +11,7 @@ public sealed class GetAllBoardQueryHandler(IBoardRepository boardRepository) : 
         try
         {
             int accountId = 1;
-            return boardRepository.GetAllBoardAsync(accountId);
+            return boardRepository.GetAllBoardAsync(accountId, request.AssignedTo);
         }
         catch
         {
