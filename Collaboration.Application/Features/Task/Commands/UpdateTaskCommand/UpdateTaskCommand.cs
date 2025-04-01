@@ -3,10 +3,12 @@ using MediatR;
 
 namespace Collaboration.Application.Features.Task.Commands.UpdateTaskCommand;
 
-public record UpdateTaskCommand(int Id,string Title,
+public record UpdateTaskCommand(int Id,
+    string Title,
     string Description,
     int? Priority,
     DateTime? StartDate,
     DateTime? EndDate,
     int AssignedTo,
-    int BoardId, int Status) : IRequest<Response>;
+    int BoardId, 
+    int Status) : IRequest<Response>;

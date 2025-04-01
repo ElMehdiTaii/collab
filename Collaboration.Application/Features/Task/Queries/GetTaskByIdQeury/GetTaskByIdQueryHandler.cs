@@ -7,6 +7,6 @@ public class GetTaskByIdQueryHandler(ITaskRepository taskRepository) : IRequestH
 {
     public async Task<Domain.Entities.Task> Handle(GetTaskByIdQuery request, CancellationToken cancellationToken)
     {
-        return await taskRepository.GetByIdAsync(request.Id);
+        return await taskRepository.GetTaskAsync(request.Id);
     }
 }

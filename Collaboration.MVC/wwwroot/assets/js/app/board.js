@@ -1,6 +1,27 @@
 ﻿$(document).ready(() => {
+    console.log($("#user-claims").val());
+
     loadBoards();
+
     loadUsers();
+
+    $('#btnCreateBoard').on('click', function () {
+        table.ajax.reload();    
+    });
+
+    $("#showSelectedOnly").on("change", function () {
+        if (this.checked) {
+            $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+                const row = table.row(dataIndex).node();
+                const checkbox = $(row).find(".task-checkbox");
+                return checkbox.is(":checked");
+            });
+        } else {
+            $.fn.dataTable.ext.search.pop();
+        }
+        table.draw();
+    });
+
 });
 
 var favouriteBtn = document.querySelectorAll(".favourite-btn");
@@ -23,138 +44,223 @@ if (removeProduct) {
     });
 }
 
+const boardsPerPage = 8;
+
+let currentPage = 1;
+
+let allBoards = [];
+
+const table = $("#tasksTableReference").DataTable({
+    ajax: {
+        url: `/task/GetAllReferences`,
+        type: "GET",
+        dataSrc: ""
+    },
+    columns: [
+        {
+            data: null,
+            orderable: false,
+            className: "text-center",
+            render: function (data, type, row) {
+                return `<input type="checkbox" class="task-checkbox" data-id="${row.id}">`;
+            }
+        },
+        { data: "id" },
+        { data: "title" },
+        { data: "assignedTo" },
+        { data: "startDate" },
+        { data: "endDate" },
+        {
+            data: "status", render: function (data, type, row) {
+                return getStatusBadge(data);
+            }
+        },
+        {
+            data: "priority", render: function (data, type, row) {
+                return getPriorityBadge(data);
+            }
+        }
+    ],
+    autoWidth: false,
+    columnDefs: [
+        { targets: 0, orderable: false, width: "50px", className: "text-center" },
+        { width: "50px", targets: 1 },
+        { width: "150px", targets: 2 },
+        { width: "120px", targets: 3 },
+        { width: "100px", targets: 4 },
+        { width: "100px", targets: 5 },
+        { width: "120px", targets: 6 },
+        { width: "100px", targets: 7 }
+    ],
+    fixedColumns: true
+});
+
 const loadBoards = async (selectedUserIds = []) => {
     try {
         if (!Array.isArray(selectedUserIds) || selectedUserIds.length === 0) {
             selectedUserIds = null;
         }
+
         const response = await $.ajax({
             url: '/Board/Get',
             type: 'POST',
             contentType: 'application/json',
-            data:  JSON.stringify(selectedUserIds)
+            data: JSON.stringify(selectedUserIds)
         });
 
-        $('#boardList').empty();
-
-        if ($('#boardList').children('.row').length === 0) {
-            $('#boardList').append('<div class="row" id="boardRow"></div>');
-        }
-
-        response.forEach(board => {
-            var boardHtml = `
-                <div class="col-xxl-3 col-sm-6 project-card">
-                            <div class="card card-height-100">
-                                <div class="card-body">
-                                    <div class="d-flex flex-column h-100">
-                                        <div class="d-flex">
-                                            <div class="flex-grow-1">
-                                                <div class="badge bg-warning-subtle text-warning fs-12">${board.status}</div>
-                                            </div>
-                                            <div class="flex-shrink-0">
-                                                <div class="d-flex gap-1 align-items-center">
-                                                    <button type="button" class="btn avatar-xs mt-n1 p-0 favourite-btn">
-                                                        <span class="avatar-title bg-transparent fs-15">
-                                                            <i class="ri-star-fill"></i>
-                                                        </span>
-                                                    </button>
-                                                    <div class="dropdown">
-                                                        <button class="btn btn-link text-muted p-1 mt-n2 py-0 text-decoration-none fs-15" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal icon-sm"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                                        </button>
-
-                                                        <div class="dropdown-menu dropdown-menu-end" style="">
-                                                            <a class="dropdown-item" href="Task/index/${board.id}"><i class="ri-eye-fill align-bottom me-2 text-muted"></i>
-                                                                View</a>
-                                                            <!--<a class="dropdown-item" href="apps-projects-create.html"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                                Edit</a>
-                                                            <div class="dropdown-divider"></div>
-                                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#removeProjectModal"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                                Remove</a>-->
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex mb-2">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar-sm">
-                                                    <span class="avatar-title bg-warning-subtle rounded p-2">
-                                                        <img src="assets/images/brands/slack.png" alt="" class="img-fluid p-1">
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h5 class="mb-1 fs-14"><a href="apps-projects-overview.html" class="text-body">${board.title}</a></h5>
-                                                <p class="text-muted text-truncate-two-lines mb-3">${board.discription}</p>
-                                            </div>
-                                        </div>
-                                         <div class="mt-auto">
-                                            <div class="d-flex mb-2">
-                                                <div class="flex-grow-1">
-                                                    <div>Tasks</div>
-                                                </div>
-                                                <div class="flex-shrink-0">
-                                                    <div><i class="ri-list-check align-bottom me-1 text-muted"></i>
-                                                        ${board.completedTask}/${board.taskCount}</div>
-                                                </div>
-                                            </div>
-                                            <div class="progress progress-sm animated-progress">
-                                                <div class="progress-bar bg-success" role="progressbar" aria-valuenow="34" aria-valuemin="0" aria-valuemax="100" style="width: ${board.taskProgress}%;">
-                                                </div><!-- /.progress-bar -->
-                                            </div><!-- /.progress -->
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <!-- end card body -->
-                                <div class="card-footer bg-transparent border-top-dashed py-2">
-                                    <div class="d-flex align-items-center">
-                                        <div class="flex-grow-1">
-                                             <div class="avatar-group" id="avatar-group-${board.id}">
-                                        </div>
-                                        </div>
-                                        <div class="flex-shrink-0">
-                                            <div class="text-muted">
-                                                <i class="me-1 align-bottom"></i>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                                <!-- end card footer -->
-                            </div>
-                            <!-- end card -->
-                        </div>
-    `;
-
-            $('#boardRow').append(boardHtml);
-
-            board.boardTeam.forEach(member => {
-
-                const firstChar = member.fullName.charAt(0).toUpperCase();
-
-                const avatarHtml = `
-            <a href="javascript: void(0);" class="avatar-group-item"
-               data-bs-toggle="tooltip" data-bs-trigger="hover"
-               data-bs-placement="top" title="${member.fullName}">
-                <div class="avatar-xxs">
-                    <div class="avatar-title rounded-circle bg-danger">
-                        ${firstChar}
-                    </div>
-                </div>
-            </a>
-        `;
-                $(`#avatar-group-${board.id}`).append(avatarHtml);
-            });
-        });
+        allBoards = response;
+        renderBoards();
 
     } catch (error) {
         console.error('Error:', error);
         alert('Failed to load boards.');
     }
-}
+};
+
+const renderBoards = () => {
+    $('#boardRow').empty();
+
+    const start = (currentPage - 1) * boardsPerPage;
+    const end = start + boardsPerPage;
+    const paginatedBoards = allBoards.slice(start, end);
+
+    if (paginatedBoards.length === 0) {
+        $('#boardRow').html('<p class="text-center">No boards found.</p>');
+    } else {
+        paginatedBoards.forEach(board => {
+            var boardHtml = `
+                <div class="col-xxl-3 col-sm-6 project-card">
+                    <div class="card card-height-100">
+                        <div class="card-body">
+                            <div class="d-flex flex-column h-100">
+                                <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        <div class="badge bg-warning-subtle text-warning fs-12">${board.status}</div>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        <div class="d-flex gap-1 align-items-center">
+                                            <button type="button" class="btn avatar-xs mt-n1 p-0 favourite-btn">
+                                                <span class="avatar-title bg-transparent fs-15">
+                                                    <i class="ri-star-fill"></i>
+                                                </span>
+                                            </button>
+                                            <div class="dropdown">
+                                                <button class="btn btn-link text-muted p-1 mt-n2 py-0 text-decoration-none fs-15" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal icon-sm">
+                                                        <circle cx="12" cy="12" r="1"></circle>
+                                                        <circle cx="19" cy="12" r="1"></circle>
+                                                        <circle cx="5" cy="12" r="1"></circle>
+                                                    </svg>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a class="dropdown-item" href="Task/index/${board.id}">
+                                                        <i class="ri-eye-fill align-bottom me-2 text-muted"></i> View
+                                                    </a>
+                                                    <a class="dropdown-item" href="Task/index/${board.id}">
+                                                        <i class="ri-delete-bin-3-fill align-bottom me-2 text-muted"></i> Delete
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-2">
+                                    <div class="flex-shrink-0 me-3">
+                                        <div class="avatar-sm">
+                                            <span class="avatar-title bg-warning-subtle rounded p-2">
+                                                <img src="assets/images/brands/slack.png" alt="" class="img-fluid p-1">
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="mb-1 fs-14"><a href="apps-projects-overview.html" class="text-body">${board.title}</a></h5>
+                                        <p class="text-muted text-truncate-two-lines mb-3">${board.discription}</p>
+                                    </div>
+                                </div>
+                                <div class="mt-auto">
+                                    <div class="d-flex mb-2">
+                                        <div class="flex-grow-1">
+                                            <div>Tasks</div>
+                                        </div>
+                                        <div class="flex-shrink-0">
+                                            <div><i class="ri-list-check align-bottom me-1 text-muted"></i>
+                                                ${board.completedTask}/${board.taskCount}</div>
+                                        </div>
+                                    </div>
+                                    <div class="progress progress-sm animated-progress">
+                                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="${board.taskProgress}" aria-valuemin="0" aria-valuemax="100" style="width: ${board.taskProgress}%;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-dashed py-2">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-grow-1">
+                                    <div class="avatar-group" id="avatar-group-${board.id}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            $('#boardRow').append(boardHtml);
+
+            board.boardTeam.forEach(member => {
+                const firstChar = member.fullName.charAt(0).toUpperCase();
+                const avatarHtml = `
+                    <a href="javascript:void(0);" class="avatar-group-item" data-bs-toggle="tooltip" title="${member.fullName}">
+                        <div class="avatar-xxs">
+                            <div class="avatar-title rounded-circle bg-danger">
+                                ${firstChar}
+                            </div>
+                        </div>
+                    </a>
+                `;
+                $(`#avatar-group-${board.id}`).append(avatarHtml);
+            });
+        });
+    }
+
+    renderPagination();
+};
+
+const renderPagination = () => {
+    const totalPages = Math.ceil(allBoards.length / boardsPerPage);
+    const paginationContainer = $('#boardPagination');
+    paginationContainer.empty();
+
+    if (totalPages <= 1) return;
+
+    let paginationHtml = `
+        <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="changePage(${currentPage - 1})">Previous</a>
+        </li>
+    `;
+
+    for (let i = 1; i <= totalPages; i++) {
+        paginationHtml += `
+            <li class="page-item ${i === currentPage ? 'active' : ''}">
+                <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
+            </li>
+        `;
+    }
+
+    paginationHtml += `
+        <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="changePage(${currentPage + 1})">Next</a>
+        </li>
+    `;
+
+    paginationContainer.append(paginationHtml);
+};
+
+const changePage = (page) => {
+    if (page < 1 || page > Math.ceil(allBoards.length / boardsPerPage)) return;
+    currentPage = page;
+    renderBoards();
+};
 
 const loadUsers = async () => {
     try {
@@ -195,12 +301,20 @@ const loadUsers = async () => {
 }
 
 const handleCreateBoard = async (e) => {
+
     e.preventDefault();
+
+    const selectedTaskIds = table.$(".task-checkbox:checked").map(function () {
+        return $(this).data("id");
+    }).get();
 
     const data = {
         title: $('#boardTitle').val(),
-        description: $('#boardDescription').val()
+        description: $('#boardDescription').val(),
+        tasksId: selectedTaskIds
     };
+
+    console.log(data);
 
     try {
         const response = await $.ajax({
@@ -221,52 +335,12 @@ const handleCreateBoard = async (e) => {
 
 $('#createBoardForm').on('submit', handleCreateBoard);
 
-const loadTasks = async () => {
-    try {
-        const response = await $.ajax({
-            url: '/Task/GetAll',
-            type: 'GET',
-            contentType: 'application/json'
-        });
-
-        renderTaskTable(response);
-
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to load Tasks.');
-    }
-};
-
-$('#btnCreateBoard').on('click', loadTasks);
-
 document.getElementById('userList').addEventListener('change', () => {
     const selectedIds = Array.from(document.getElementById('userList').selectedOptions)
         .map(option => option.value);
 
     loadBoards([...new Set(selectedIds)]);
 });
-function renderTaskTable(tasks) {
-    const tableBody = document.getElementById("tableBody");
-    tableBody.innerHTML = "";
-
-    tasks.forEach((task, index) => {
-        const row = `
-                    <tr>
-                        <td><input type="checkbox" class="row-checkbox"></td>
-                        <td>${task.title}</td>
-                        <td>${task.description}</td>
-                        <td>${task.status ?? "N/A"}</td>
-                        <td>${task.priority ?? "N/A"}</td>
-                        <td>${task.startDate ? new Date(task.startDate).toLocaleDateString() : "N/A"}</td>
-                        <td>${task.endDate ? new Date(task.endDate).toLocaleDateString() : "N/A"}</td>
-                        <td></td>
-                    </tr>
-                `; //${task.assignedTo}
-        tableBody.innerHTML += row;
-    });
-
-    addCheckboxListeners();
-}
 function addCheckboxListeners() {
     const selectAll = document.getElementById("selectAll");
     const checkboxes = document.querySelectorAll(".row-checkbox");
@@ -277,25 +351,44 @@ function addCheckboxListeners() {
         });
     }
 }
+function getStatusBadge(status) {
+    let badgeClass;
+    let statusText = status.toString().toLowerCase();
 
-document.getElementById("searchInput").addEventListener("keyup", function () {
-    let filter = this.value.toLowerCase();
-    let rows = document.querySelectorAll("#tableBody tr");
+    switch (statusText) {
+        case "0":
+        case "new":
+            badgeClass = "bg-primary"; statusText = "New";
+            break;
+        case "1":
+        case "open":
+            badgeClass = "bg-secondary"; statusText = "Open";
+            break;
+        case "2":
+        case "in progress":
+            badgeClass = "bg-success"; statusText = "In Progress";
+            break;
+        case "3":
+        case "completed":
+            badgeClass = "bg-info"; statusText = "Completed";
+            break;
+        case "4":
+        case "closed":
+            badgeClass = "bg-warning"; statusText = "Closed";
+            break;
+        default:
+            badgeClass = "bg-dark"; statusText = "Unknown";
+    }
 
-    rows.forEach(row => {
-        let text = row.textContent.toLowerCase();
-        row.style.display = text.includes(filter) ? "" : "none";
-    });
-});
-
-document.getElementById("showSelectedOnly").addEventListener("change", function () {
-    let checkboxes = document.querySelectorAll(".row-checkbox");
-    checkboxes.forEach(cb => {
-        let row = cb.closest("tr");
-        if (this.checked) {
-            row.style.display = cb.checked ? "" : "none";
-        } else {
-            row.style.display = "";
-        }
-    });
-});
+    return `<span class="badge ${badgeClass}">${statusText}</span>`;
+}
+function getPriorityBadge(priority) {
+    let badgeClass;
+    switch (priority.toLowerCase()) {
+        case "low": badgeClass = "bg-primary"; break;
+        case "medium": badgeClass = "bg-warning"; break;
+        case "high": badgeClass = "bg-danger"; break;
+        default: badgeClass = "bg-dark";
+    }
+    return `<span class="badge ${badgeClass}">${priority}</span>`;
+}

@@ -1,6 +1,7 @@
 ﻿using Collaboration.Application.Contracts.Persistence;
 using Collaboration.Application.Exceptions;
 using Collaboration.Domain.DTOs.Common;
+using Collaboration.Domain.Enums;
 using MediatR;
 
 namespace Collaboration.Application.Features.Task.Commands.CreateTaskCommand;
@@ -19,7 +20,7 @@ public class CreateTaskCommandHandler(ITaskRepository taskRepository)
             StartDate = request.StartDate,
             EndDate = request.EndDate,
             Priority = request.Priority,
-            Status = 1
+            Status = (int)Domain.Enums.TaskStatus.NEW
         };
 
         if (await taskRepository.CreateTaskAsync(task))

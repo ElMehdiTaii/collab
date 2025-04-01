@@ -2,11 +2,13 @@
 using Collaboration.Application.Features.Authentication.Queries.AuthenticationQuery;
 using Collaboration.Application.Features.Board.Commands.CreateBoardCommand;
 using Collaboration.Application.Features.Task.Commands.CreateTaskCommand;
+using Collaboration.Application.Features.Task.Commands.UpdateTaskCommand;
 using Collaboration.Domain.DTOs.Authentication;
 using Collaboration.Domain.DTOs.Board;
 using Collaboration.Domain.DTOs.Task;
 using Collaboration.Domain.DTOs.User;
 using Collaboration.Domain.Entities;
+using System.Linq;
 
 namespace Collaboration.MVC.MappingProfiles;
 
@@ -20,7 +22,22 @@ public class MappingConfig : Profile
 
         CreateMap<CreateTaskDto, CreateTaskCommand>().ReverseMap();
 
+        CreateMap<UpdateTaskDto, UpdateTaskCommand>().ReverseMap();
+
         CreateMap<User, GetUserDto>().ReverseMap();
+
+        CreateMap<IEnumerable<Domain.Entities.Task>, List<GetAllTaskDto>>()
+            .ConvertUsing(src => src.Select(task => new GetAllTaskDto(
+                task.Id,
+                task.Title,
+                task.Description,
+                FormatDate(task.StartDate),
+                FormatDate(task.EndDate),
+                ConvertTaskPriority(task.Priority),
+                ConvertTaskStatus(task.Status),
+                task.UserId,
+                task.User.FullName
+            )).ToList());
 
         CreateMap<Domain.Entities.Task, GetTaskDto>().ReverseMap();
 
@@ -80,5 +97,30 @@ public class MappingConfig : Profile
         }
 
         return string.Empty;
+    }
+    private static string ConvertTaskStatus(int? status)
+    {
+        return status switch
+        {
+            0 => "New",
+            1 => "Open",
+            2 => "In Progress",
+            3 => "Completed",
+            4 => "Closed",
+            _ => "Unknown"
+        };
+    }
+    private static string ConvertTaskPriority(int? priority)
+    {
+        return priority switch
+        {
+            0 => "High",
+            1 => "Meduim",
+            2 => "Low"
+        };
+    }
+    public static string FormatDate(DateTime? date)
+    {
+        return date.HasValue ? date.Value.ToString("MMM dd, yyyy") : "N/A";
     }
 }

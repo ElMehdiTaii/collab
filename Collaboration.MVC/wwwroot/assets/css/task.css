@@ -1,0 +1,312 @@
+﻿/* Modern DataTable styling - Complete CSS */
+
+/* Table base styling */
+#tasksTable {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    border-radius: 0.375rem;
+    overflow: hidden;
+    font-size: 0.875rem;
+}
+
+    #tasksTable thead th {
+        background-color: #f8f9fa;
+        color: #495057;
+        font-weight: 600;
+        padding: 0.75rem;
+        border-bottom: 2px solid #dee2e6;
+        white-space: nowrap;
+    }
+
+    #tasksTable tbody tr {
+        transition: background-color 0.15s ease-in-out;
+    }
+
+        #tasksTable tbody tr:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+    #tasksTable tbody td {
+        padding: 0.75rem;
+        border-bottom: 1px solid #dee2e6;
+        vertical-align: middle;
+    }
+
+    /* Status styling */
+    #tasksTable .task-status {
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        display: inline-block;
+    }
+
+    #tasksTable .task-status-0 {
+        background-color: #f8f9fa;
+        color: #6c757d;
+    }
+
+    #tasksTable .task-status-1 {
+        background-color: #cff4fc;
+        color: #055160;
+    }
+
+    #tasksTable .task-status-2 {
+        background-color: #d1e7dd;
+        color: #0f5132;
+    }
+
+    /* Priority styling */
+    #tasksTable .task-priority-1 {
+        color: #dc3545;
+        font-weight: 600;
+    }
+
+    #tasksTable .task-priority-2 {
+        color: #fd7e14;
+        font-weight: 600;
+    }
+
+    #tasksTable .task-priority-3 {
+        color: #198754;
+        font-weight: 600;
+    }
+
+    /* Button styling */
+    #tasksTable .btn {
+        padding: 0.25rem 0.5rem;
+        margin-right: 0.25rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.25rem;
+        transition: all 0.15s ease-in-out;
+    }
+
+    #tasksTable .btn-sm {
+        font-size: 0.8125rem;
+    }
+
+    #tasksTable .btn-success {
+        background-color: #20c997;
+        border-color: #20c997;
+    }
+
+        #tasksTable .btn-success:hover {
+            background-color: #1ba87e;
+            border-color: #1ba87e;
+        }
+
+    #tasksTable .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+        #tasksTable .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+/* DataTables specific styling */
+.dataTables_wrapper {
+    position: relative;
+    clear: both;
+}
+
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter {
+        margin-bottom: 1rem;
+    }
+
+    .dataTables_wrapper .dataTables_length {
+        float: left;
+    }
+
+    .dataTables_wrapper .dataTables_filter {
+        float: right;
+        text-align: right;
+    }
+
+    .dataTables_wrapper .dataTables_length select {
+        min-width: 4rem;
+        padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+        font-size: 0.875rem;
+        border-radius: 0.25rem;
+        border: 1px solid #dee2e6;
+        background-color: #fff;
+    }
+
+    .dataTables_wrapper .dataTables_filter input {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+        border-radius: 0.25rem;
+        border: 1px solid #dee2e6;
+        margin-left: 0.5rem;
+    }
+
+    .dataTables_wrapper .dataTables_info {
+        padding-top: 0.75rem;
+        font-size: 0.875rem;
+        color: #6c757d;
+        clear: both;
+        float: left;
+    }
+
+    .dataTables_wrapper .dataTables_paginate {
+        padding-top: 0.75rem;
+        margin-top: 0.5rem;
+        float: right;
+        text-align: right;
+    }
+
+        /* Pagination styling */
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            box-sizing: border-box;
+            display: inline-block;
+            min-width: 1.5em;
+            padding: 0.375rem 0.75rem !important;
+            margin-left: 0.25rem;
+            text-align: center;
+            text-decoration: none !important;
+            cursor: pointer;
+            border-radius: 0.25rem !important;
+            border: 1px solid #dee2e6 !important;
+            background-color: #fff !important;
+            background: #fff !important;
+            color: #495057 !important;
+        }
+
+            .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+                background: #e9ecef !important;
+                border-color: #dee2e6 !important;
+                color: #212529 !important;
+            }
+
+            .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+            .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+                background: #DCDCDC !important;
+                color: white !important;
+            }
+
+            .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
+            .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover,
+            .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
+                color: #6c757d !important;
+                border: 1px solid #dee2e6 !important;
+                background: #fff !important;
+                cursor: not-allowed;
+            }
+
+            .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+                background: #0b5ed7 !important;
+                color: white !important;
+            }
+
+        .dataTables_wrapper .dataTables_paginate .ellipsis {
+            padding: 0 1em;
+        }
+
+    /* Processing indicator */
+    .dataTables_wrapper .dataTables_processing {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 40px;
+        margin-left: -50%;
+        margin-top: -25px;
+        padding-top: 20px;
+        text-align: center;
+        font-size: 1.2em;
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+/* Sorting indicators */
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting_asc_disabled,
+table.dataTable thead .sorting_desc_disabled {
+    cursor: pointer;
+    position: relative;
+}
+
+    table.dataTable thead .sorting:after,
+    table.dataTable thead .sorting_asc:after,
+    table.dataTable thead .sorting_desc:after {
+        position: absolute;
+        bottom: 0.5em;
+        right: 0.5em;
+        display: block;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        opacity: 0.5;
+    }
+
+    table.dataTable thead .sorting:after {
+        content: "\2195"; /* up-down arrow */
+        opacity: 0.2;
+    }
+
+    table.dataTable thead .sorting_asc:after {
+        content: "\2191"; /* up arrow */
+    }
+
+    table.dataTable thead .sorting_desc:after {
+        content: "\2193"; /* down arrow */
+    }
+
+/* Responsive table */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Card styling */
+.card {
+    border: 0;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    padding: 1rem 1.5rem;
+}
+
+/* Clear floats */
+.dataTables_wrapper::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 767px) {
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter,
+    .dataTables_wrapper .dataTables_info,
+    .dataTables_wrapper .dataTables_paginate {
+        float: none;
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .dataTables_wrapper .dataTables_filter {
+        margin-top: 0.5rem;
+    }
+
+    .dataTables_wrapper .dataTables_paginate {
+        margin-top: 0.5rem;
+        white-space: nowrap;
+        overflow-x: auto;
+        max-width: 100%;
+        padding-bottom: 0.5rem;
+    }
+}

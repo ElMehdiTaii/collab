@@ -2,7 +2,6 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<!-- start page title -->
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
@@ -18,6 +17,7 @@
         </div>
     </div>
 </div>
+
 <input type="hidden" id="boardId" value="@ViewBag.BoardId" />
 
 <div class="row">
@@ -27,12 +27,7 @@
                 <div class="d-flex justify-content-between">
                     <div>
                         <p class="fw-medium text-muted mb-0">Total Tasks</p>
-                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="234">0</span>k</h2>
-                        <p class="mb-0 text-muted">
-                            <span class="badge bg-light text-success mb-0">
-                                <i class="ri-arrow-up-line align-middle"></i> 17.32 %
-                            </span> vs. previous month
-                        </p>
+                        <h2 class="mt-4 ff-secondary fw-semibold"><span id="total-tasks" class="counter-value">0</span></h2>
                     </div>
                     <div>
                         <div class="avatar-sm flex-shrink-0">
@@ -43,7 +38,7 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
     <div class="col-xxl-3 col-sm-6">
         <div class="card card-animate">
@@ -51,12 +46,7 @@
                 <div class="d-flex justify-content-between">
                     <div>
                         <p class="fw-medium text-muted mb-0">Pending Tasks</p>
-                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="64.5">0</span>k</h2>
-                        <p class="mb-0 text-muted">
-                            <span class="badge bg-light text-danger mb-0">
-                                <i class="ri-arrow-down-line align-middle"></i> 0.87 %
-                            </span> vs. previous month
-                        </p>
+                        <h2 class="mt-4 ff-secondary fw-semibold"><span id="pending-tasks" class="counter-value">0</span></h2>
                     </div>
                     <div>
                         <div class="avatar-sm flex-shrink-0">
@@ -75,12 +65,7 @@
                 <div class="d-flex justify-content-between">
                     <div>
                         <p class="fw-medium text-muted mb-0">Completed Tasks</p>
-                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="116.21">0</span>K</h2>
-                        <p class="mb-0 text-muted">
-                            <span class="badge bg-light text-danger mb-0">
-                                <i class="ri-arrow-down-line align-middle"></i> 2.52 %
-                            </span> vs. previous month
-                        </p>
+                        <h2 class="mt-4 ff-secondary fw-semibold"><span id="completed-tasks" class="counter-value">0</span></h2>
                     </div>
                     <div>
                         <div class="avatar-sm flex-shrink-0">
@@ -99,17 +84,12 @@
                 <div class="d-flex justify-content-between">
                     <div>
                         <p class="fw-medium text-muted mb-0">Closed Tasks</p>
-                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="14.84">0</span>%</h2>
-                        <p class="mb-0 text-muted">
-                            <span class="badge bg-light text-success mb-0">
-                                <i class="ri-arrow-up-line align-middle"></i> 0.63 %
-                            </span> vs. previous month
-                        </p>
+                        <h2 class="mt-4 ff-secondary fw-semibold"><span id="closed-tasks" class="counter-value">0</span></h2>
                     </div>
                     <div>
                         <div class="avatar-sm flex-shrink-0">
                             <span class="avatar-title bg-danger-subtle text-danger rounded-circle fs-4">
-                                <i class="ri-delete-bin-line"></i>
+                                <i class="ri-close-circle-line"></i>
                             </span>
                         </div>
                     </div>
@@ -156,7 +136,6 @@
         </div>
     </div>
 </div>
-
 
 
 <div class="modal fade zoomIn" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -228,7 +207,6 @@
                     <div class="hstack gap-2 justify-content-end">
                         <button type="button" class="btn btn-light" id="close-modal" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success" id="add-btn">Add Task</button>
-                        <!-- <button type="button" class="btn btn-success" id="edit-btn">Update Task</button> -->
                     </div>
                 </div>
             </form>
@@ -237,9 +215,9 @@
 </div>
 <!--end modal-->
 @section scripts {
+    <link href="~/assets/css/task.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="~/assets/js/app/task.js"></script>
-    @* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 }

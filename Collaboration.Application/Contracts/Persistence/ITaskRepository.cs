@@ -7,4 +7,6 @@ public interface ITaskRepository : IGenericRepository<Domain.Entities.Task>
     Task<Domain.Entities.Task> GetTaskAsync(int taskId);
     Task<List<Domain.Entities.Task>> GetTasksAsync(int[]? taskId);
     Task<bool> CreateTaskAsync(Domain.Entities.Task task);
+    Task<bool> DeleteTaskAsync(Domain.Entities.Task task);
+    Task<bool> UpdateTaskAsync(Domain.Entities.Task task);
 }

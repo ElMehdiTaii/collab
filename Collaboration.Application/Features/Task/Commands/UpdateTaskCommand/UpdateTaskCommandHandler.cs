@@ -9,7 +9,8 @@ public sealed class UpdateTaskCommandHandler(ITaskRepository taskRepository) : I
 {
     public async Task<Response> Handle(UpdateTaskCommand request, CancellationToken cancellationToken)
     {
-        var task = await taskRepository.GetTaskAsync(request.Id);
+        var task = await taskRepository.GetTaskAsync(request.Id) ??
+            throw new NotFoundException("Task not found", request.Id);
 
         task.BoardId = request.BoardId;
         task.Title = request.Title;
@@ -20,7 +21,7 @@ public sealed class UpdateTaskCommandHandler(ITaskRepository taskRepository) : I
         task.Priority = request.Priority;
         task.Status = request.Status;
 
-        if (await taskRepository.CreateTaskAsync(task))
+        if (await taskRepository.UpdateTaskAsync(task))
             return new Response("Task created successfully", task.Id);
         throw new BadRequestException("Something was wrong");
     }

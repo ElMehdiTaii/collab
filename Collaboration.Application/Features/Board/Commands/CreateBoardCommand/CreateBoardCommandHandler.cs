@@ -9,9 +9,14 @@ public class CreateBoardCommandHandler(IBoardRepository boardRepository, ITaskRe
 {
     public async Task<Response> Handle(CreateBoardCommand request, CancellationToken cancellationToken)
     {
-        List<Domain.Entities.Task> tasks = await taskRepository.GetTasksAsync(request.TasksId);
+        var tasks = (await taskRepository.GetTasksAsync(request.TasksId))
+            .Select(task =>
+            {
+                task.Status = (int)Domain.Enums.TaskStatus.NEW;
+                return task;
+            }).ToList();
 
-        Domain.Entities.Board board = new()
+        var board = new Domain.Entities.Board
         {
             Title = request.Title,
             Discription = request.Description,

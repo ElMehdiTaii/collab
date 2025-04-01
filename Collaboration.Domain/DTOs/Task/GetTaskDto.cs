@@ -5,6 +5,6 @@ public sealed record GetTaskDto(int Id,
                                string Description,
                                DateTime? StartDate,
                                DateTime? EndDate,
-                               string Priority,
-                               string Status,
+                               int Priority,
+                               int Status,
                                int UserId);
