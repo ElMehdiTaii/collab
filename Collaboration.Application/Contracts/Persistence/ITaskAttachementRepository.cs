@@ -8,4 +8,6 @@ public interface ITaskAttachementRepository : IGenericRepository<TaskAttachement
 
     Task<bool> DeleteTaskAttachementAsync(int id);
 
+    Task<TaskAttachement?> GetAsync(int id, CancellationToken cancellationToken = default);
+
 }

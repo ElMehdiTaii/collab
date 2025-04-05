@@ -17,8 +17,30 @@ public class BoardController(IMapper _mapper, IMediator _mediator) : Controller
         return View();
     }
 
+    public async Task<IActionResult> GetSuggestions([FromQuery] string query)
+    {
+        try
+        {
+            return Ok((await _mediator.Send(new GetAllBoardQuery(null)))
+                .Where(b => b.Title.ToLower().Contains(query.ToLower()))
+                .Select(q => q.Title));
+        }
+        catch (BadRequestException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return Problem(
+                detail: ex.Message,
+                statusCode: 500,
+                title: "An unexpected error occurred."
+            );
+        }
+    }
+
     [HttpPost]
-    public async Task<IActionResult> Get([FromBody]int[] assignedTo)
+    public async Task<IActionResult> Get([FromBody] int[] assignedTo)
     {
         try
         {

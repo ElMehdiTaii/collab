@@ -2,7 +2,7 @@
 
 public enum TaskPriority : short
 {
-    HIGH = 0,
-    MEDUIM = 1,
-    LOW = 2,
+    HIGH = 1,
+    MEDUIM = 2,
+    LOW = 3,
 }

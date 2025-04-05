@@ -41,7 +41,10 @@ public class MappingConfig : Profile
                 task.User.FullName
             )).ToList());
 
-        CreateMap<Domain.Entities.Task, GetTaskDto>().ReverseMap();
+        CreateMap<Domain.Entities.Task, GetTaskDto>()            
+            .ReverseMap();
+
+        CreateMap<TaskAttachement, GetTaskAttachementDto>();
 
         CreateMap<Board, GetBoardDto>()
             .ForMember(dest => dest.TaskProgress, opt => opt.MapFrom(src => CalculateProgress(src.Tasks.ToList())))
@@ -104,11 +107,11 @@ public class MappingConfig : Profile
     {
         return status switch
         {
-            0 => "New",
-            1 => "Open",
-            2 => "In Progress",
-            3 => "Completed",
-            4 => "Closed",
+            1 => "New",
+            2 => "Open",
+            3 => "In Progress",
+            4 => "Completed",
+            5 => "Closed",
             _ => "Unknown"
         };
     }
@@ -116,9 +119,10 @@ public class MappingConfig : Profile
     {
         return priority switch
         {
-            0 => "High",
-            1 => "Meduim",
-            2 => "Low"
+            1 => "High",
+            2 => "Meduim",
+            3 => "Low",
+            _ => "N/A"
         };
     }
     public static string FormatDate(DateTime? date)

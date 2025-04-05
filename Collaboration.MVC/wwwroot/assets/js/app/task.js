@@ -1,10 +1,5 @@
 ﻿$(document).ready(() => {
 
-    var myModal = new bootstrap.Modal(document.getElementById('showModal'), {
-        backdrop: 'static',
-        keyboard: false
-    });
-
     $(".add-btn").on("click", async (event) => {
         $("#add-btn").text("Create Task").removeClass("btn-warning").addClass("btn-success");
     });
@@ -65,37 +60,57 @@
     });
 
     $("#add-btn").on("click", async (event) => {
-
-
         event.preventDefault();
 
         const task = getTaskFormData();
-
+        console.log(task);
         if (!isValidTask(task)) {
-            Swal.fire("Warning!", "Please fill all fields!", "warning");
+            Swal.fire("Warning!", "Please fill all required fields!", "warning");
             return;
         }
 
-        console.log(task);
+        // Create a FormData object for the form submission
+        const formData = new FormData();
+
+        // Add all task fields to the FormData
+        Object.keys(task).forEach(key => {
+            if (task[key] !== null && task[key] !== undefined) {
+                formData.append(key, task[key]);
+            }
+        });
+
+        // Add files to FormData
+        const fileInput = document.getElementById("project-thumbnail-img");
+        if (fileInput.files.length > 0) {
+            for (let i = 0; i < fileInput.files.length; i++) {
+                formData.append("files", fileInput.files[i]);
+            }
+        }
 
         const requestType = editingTaskId ? "PUT" : "POST";
-
         const url = editingTaskId ? `/task/Update/${editingTaskId}` : "/task/Create";
 
         try {
             await $.ajax({
-                url,
+                url: url,
                 type: requestType,
-                contentType: "application/json",
-                data: JSON.stringify(task)
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    Swal.fire("Success!", `Task ${editingTaskId ? "updated" : "created"} successfully!`, "success");
+                    $("#showModal").modal("hide");
+                    resetForm();
+                    table.ajax.reload();
+                },
+                error: function (error) {
+                    console.error("Error:", error);
+                    Swal.fire("Error!", `Failed to ${editingTaskId ? "update" : "create"} task.`, "error");
+                }
             });
-
-            Swal.fire("Success!", `Task ${editingTaskId ? "updated" : "added"} successfully!`, "success");
-            $("#showModal").modal("hide");
-            resetForm();
-            table.ajax.reload();
         } catch (err) {
-            Swal.fire("Error!", `Failed to ${editingTaskId ? "update" : "add"} task.`, "error");
+            console.error("Exception:", err);
+            Swal.fire("Error!", `An unexpected error occurred.`, "error");
         }
     });
 
@@ -157,11 +172,9 @@
     function isValidTask(task) {
         return Object.values(task).every(value => value);
     }
-    
     function formatDate(dateString) {
         return dateString ? new Date(dateString).toISOString() : null;
     }
-
     function populateTaskForm(task) {
         $("#tasksId").val(task.id);
         $("#taskTilte-field").val(task.title);
@@ -174,20 +187,34 @@
         loadAssignedUsers(task.userId);
         $("#taskAssignedTo-field").val(task.userId);
 
+        populateAttachments(task.taskAttachements);
+
         $("#add-btn").text("Update Task").removeClass("btn-success").addClass("btn-warning");
     }
-
     function resetForm() {
-        $("#tasksId, #taskTilte-field, #tasksDescription-field, #taskStartDate-field, #taskEndDate-field, #task-status, #taskPriority-field, #taskAssignedTo-field").val("");
-        editingTaskId = null;
-    }
+        $("#tasksId").val("");
+        $("#taskTilte-field").val("");
+        $("#tasksDescription-field").val("");
+        $("#taskStartDate-field").val("");
+        $("#taskEndDate-field").val("");
+        $("#task-status").val("");
+        $("#taskPriority-field").val("");
+        $("#taskAssignedTo-field").val("");
 
+        // Reset file input
+        $("#project-thumbnail-img").val("");
+
+        // Clear attachments display
+        $(".pt-3.border-top.border-top-dashed.mt-4 .row.g-3").empty();
+
+        editingTaskId = null;
+        $("#add-btn").text("Create Task").removeClass("btn-warning").addClass("btn-success");
+    }
     function formatDateForInput(dateString) {
         if (!dateString) return "";
         const date = new Date(dateString);
         return date.toISOString().split("T")[0];
     }
-
     const loadTaskKpis = (boardId) => {
         $.get(`/task/TaskKpis?boardId=${boardId}`, function (data) {
             if (!data) return;
@@ -200,31 +227,29 @@
             Swal.fire("Error!", "Failed to load KPIs.", "error");
         });
     };
-
     loadTaskKpis(boardId);
-
     function getStatusBadge(status) {
         let badgeClass;
         let statusText = status.toString().toLowerCase();
 
         switch (statusText) {
-            case "0":
+            case "1":
             case "new":
                 badgeClass = "bg-primary"; statusText = "New";
                 break;
-            case "1":
+            case "2":
             case "open":
                 badgeClass = "bg-secondary"; statusText = "Open";
                 break;
-            case "2":
+            case "3":
             case "in progress":
                 badgeClass = "bg-success"; statusText = "In Progress";
                 break;
-            case "3":
+            case "4":
             case "completed":
                 badgeClass = "bg-info"; statusText = "Completed";
                 break;
-            case "4":
+            case "5":
             case "closed":
                 badgeClass = "bg-warning"; statusText = "Closed";
                 break;
@@ -234,7 +259,6 @@
 
         return `<span class="badge ${badgeClass}">${statusText}</span>`;
     }
-
     function getPriorityBadge(priority) {
         let badgeClass;
         switch (priority.toLowerCase()) {
@@ -244,5 +268,126 @@
             default: badgeClass = "bg-dark";
         }
         return `<span class="badge ${badgeClass}">${priority}</span>`;
+    }
+    function populateAttachments(attachments) {
+        const resourcesRow = $(".pt-3.border-top.border-top-dashed.mt-4 .row.g-3");
+        resourcesRow.empty();
+
+        if (!attachments || attachments.length === 0) {
+            return;
+        }
+
+        attachments.forEach(attachment => {
+            let fileIcon = getFileIcon(attachment.name);
+            const attachmentElement = `
+            <div class="col-xxl-4 col-lg-6" data-attachment-id="${attachment.id}">
+                <div class="border rounded border-dashed p-2">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 me-3">
+                            <div class="avatar-sm">
+                                <div class="avatar-title bg-light text-secondary rounded fs-24">
+                                    <i class="${fileIcon}"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 overflow-hidden">
+                            <h5 class="fs-13 mb-1"><a href="#" class="text-body text-truncate d-block">${attachment.name}</a></h5>
+                        </div>
+                        <div class="flex-shrink-0 ms-2">
+                            <div class="d-flex gap-1">
+                                <button type="button" class="btn btn-icon text-muted btn-sm fs-18 download-attachment" 
+                                        data-attachment-id="${attachment.id}">
+                                    <i class="ri-download-2-line"></i>
+                                </button>
+                                <div class="dropdown">
+                                    <button class="btn btn-icon text-muted btn-sm fs-18 dropdown" type="button" 
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="ri-more-fill"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item delete-attachment" href="#" data-attachment-id="${attachment.id}">
+                                                <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Supprimer
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+            resourcesRow.append(attachmentElement);
+        });
+
+        $(".download-attachment").on("click", function () {
+            const attachmentId = $(this).data("attachment-id");
+            window.location.href = `/taskAttachement/download/${attachmentId}`;
+        });
+
+        $(document).on("click", ".delete-attachment", function (e) {
+            e.preventDefault();
+            const attachmentId = $(this).data("attachment-id");
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to recover this attachment!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "Cancel"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: `/taskattachement/delete/${attachmentId}`,
+                        type: "DELETE",
+                        success: function (response) {
+                            $(`div[data-attachment-id="${attachmentId}"]`).remove();
+                            Swal.fire("Deleted!", response.message, "success");
+                        },
+                        error: function () {
+                            Swal.fire("Error!", "Failed to delete attachment.", "error");
+                        }
+                    });
+                }
+            });
+        });
+    }
+    function getFileIcon(fileName) {
+        const extension = fileName.split('.').pop().toLowerCase();
+
+        const iconMap = {
+            // Images
+            'jpg': 'ri-image-line',
+            'jpeg': 'ri-image-line',
+            'png': 'ri-image-line',
+            'gif': 'ri-image-line',
+            'svg': 'ri-image-line',
+            // Documents
+            'pdf': 'ri-file-pdf-line',
+            'doc': 'ri-file-word-line',
+            'docx': 'ri-file-word-line',
+            'xls': 'ri-file-excel-line',
+            'xlsx': 'ri-file-excel-line',
+            'ppt': 'ri-file-ppt-2-line',
+            'pptx': 'ri-file-ppt-2-line',
+            // Archives
+            'zip': 'ri-file-zip-line',
+            'rar': 'ri-file-zip-line',
+            '7z': 'ri-file-zip-line',
+            // Code
+            'html': 'ri-code-line',
+            'css': 'ri-code-line',
+            'js': 'ri-code-line',
+            'json': 'ri-code-line',
+            'xml': 'ri-code-line',
+            // Other formats
+            'txt': 'ri-file-text-line',
+            'csv': 'ri-file-list-line'
+        };
+
+        return iconMap[extension] || 'ri-file-line';
     }
 });

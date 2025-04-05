@@ -32,6 +32,7 @@ public sealed class TaskRepository(CollaborationDatabaseContext context) : Gener
                              .Include(t => t.Board)
                              .ThenInclude(b => b.Account)
                              .Include(t => t.User)
+                             .Include(ta => ta.TaskAttachements)
                              .FirstAsync(t => t.Id == id);
     }
     public async Task<List<Domain.Entities.Task>> GetAllTaskByAccountAsync(int accountId)
@@ -49,6 +50,15 @@ public sealed class TaskRepository(CollaborationDatabaseContext context) : Gener
                              .ThenInclude(b => b.Account)
                              .Include(t => t.User)
                              .Where(t => taskId != null && taskId.Contains(t.Id))
+                             .ToListAsync();
+    }
+    public async Task<List<Domain.Entities.Task>> GetAllTasksByUserIdAsync(int userId)
+    {
+        return await _context.Task
+                             .Include(t => t.Board)
+                             .ThenInclude(b => b.Account)
+                             .Include(t => t.User)
+                             .Where(u => u.UserId == userId)
                              .ToListAsync();
     }
 

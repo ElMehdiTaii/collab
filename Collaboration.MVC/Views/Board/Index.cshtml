@@ -14,7 +14,23 @@
 
         th.no-sort::after, th.no-sort::before {
             display: none !important;
-        }
+        }.autocomplete-suggestions {
+            border: 1px solid #ddd;
+            border-top: none;
+            background: white;
+            overflow: auto;
+            max-height: 200px;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: absolute;
+            z-index: 1000;
+            display: none;
+        }.autocomplete-suggestion {
+            padding: 8px 12px;
+            cursor: pointer;
+        }.autocomplete-suggestion:hover {
+                background-color: #f0f0f0;
+            }
     </style>
 }
 
@@ -68,7 +84,8 @@
                         <div class="col-lg-12">
                             <label for="boardTitle" class="form-label">Board Title</label>
                             <input type="text" class="form-control" name="title" id="boardTitle"
-                                   placeholder="Entrez le nom du tableau">
+                                   placeholder="Entrez le nom du tableau" autocomplete="off">
+                            <div id="boardTitleSuggestions" class="autocomplete-suggestions"></div>
                         </div>
                         <div class="col-lg-12">
                             <label for="boardDescription" class="form-label">Board Description</label>
@@ -104,9 +121,6 @@
                                                                 <th style="width: 50px;">ID</th>
                                                                 <th style="width: 150px;">Name</th>
                                                                 <th style="width: 120px;">Assigned To</th>
-                                                                <th style="width: 100px;">Start Date</th>
-                                                                <th style="width: 100px;">End Date</th>
-                                                                <th style="width: 120px;">Status</th>
                                                                 <th style="width: 100px;">Priority</th>
                                                             </tr>
                                                         </thead>

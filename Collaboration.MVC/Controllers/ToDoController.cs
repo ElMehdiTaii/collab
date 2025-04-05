@@ -28,8 +28,30 @@ public class ToDoController(IMapper _mapper, IMediator _mediator) : Controller
             );
         }
     }
+    [HttpPost]
+    public async Task<IActionResult> Create(CreateToDoDto createToDoDto)
+    {
+        try
+        {
+            var command = _mapper.Map<ToDo>(createToDoDto);
+            //var result = await _mediator.Send(new CreateToDoCammand(command));
+            return Ok();
+        }
+        catch (BadRequestException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return Problem(
+                detail: ex.Message,
+                statusCode: 500,
+                title: "An unexpected error occurred."
+            );
+        }
+    }
 
-    [HttpGet]
+    [HttpPost]
     public async Task<IActionResult> Update(UpdateToDoDto updateToDoDto)
     {
         try

@@ -7,4 +7,8 @@ public sealed record GetTaskDto(int Id,
                                DateTime? EndDate,
                                int Priority,
                                int Status,
-                               int UserId);
+                               int UserId,
+                               List<GetTaskAttachementDto>? TaskAttachements
+                               );
+
+public sealed record GetTaskAttachementDto(int Id, string Name, byte[] Data, int TaskId);

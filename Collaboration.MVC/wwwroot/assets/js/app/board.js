@@ -22,6 +22,116 @@
         table.draw();
     });
 
+    const boardTitleInput = document.getElementById('boardTitle');
+    const suggestionContainer = document.getElementById('boardTitleSuggestions');
+
+    // Debounce function to prevent excessive API calls
+    const debounce = (func, delay) => {
+        let timeout;
+        return function (...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), delay);
+        };
+    };
+
+    const fetchSuggestions = async (query) => {
+        if (query.length < 2) {
+            suggestionContainer.style.display = 'none';
+            return;
+        }
+
+        try {
+            const response = await fetch(`/board/GetSuggestions?query=${encodeURIComponent(query)}`);
+            if (!response.ok) throw new Error('Network response was not ok');
+
+            const suggestions = await response.json();
+            displaySuggestions(suggestions);
+        } catch (error) {
+            console.error('Error fetching suggestions:', error);
+        }
+    };
+
+    // Function to display suggestions
+    const displaySuggestions = (suggestions) => {
+        suggestionContainer.innerHTML = '';
+
+        if (suggestions.length === 0) {
+            suggestionContainer.style.display = 'none';
+            return;
+        }
+
+        suggestions.forEach(suggestion => {
+            const div = document.createElement('div');
+            div.classList.add('autocomplete-suggestion');
+            div.textContent = suggestion;
+            div.addEventListener('click', () => {
+                boardTitleInput.value = suggestion;
+                suggestionContainer.style.display = 'none';
+            });
+            suggestionContainer.appendChild(div);
+        });
+
+        suggestionContainer.style.display = 'block';
+    };
+
+    // Add event listeners
+    const debouncedFetch = debounce(fetchSuggestions, 300);
+
+    boardTitleInput.addEventListener('input', (e) => {
+        debouncedFetch(e.target.value);
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', (e) => {
+        if (e.target !== boardTitleInput && !suggestionContainer.contains(e.target)) {
+            suggestionContainer.style.display = 'none';
+        }
+    });
+
+    // Handle keyboard navigation
+    boardTitleInput.addEventListener('keydown', (e) => {
+        const suggestions = document.querySelectorAll('.autocomplete-suggestion');
+        if (!suggestions.length) return;
+
+        const activeElement = document.activeElement;
+        const isInputFocused = activeElement === boardTitleInput;
+        const activeSuggestionIndex = Array.from(suggestions).findIndex(el => el === activeElement);
+
+        switch (e.key) {
+            case 'ArrowDown':
+                e.preventDefault();
+                if (isInputFocused) {
+                    suggestions[0].focus();
+                } else if (activeSuggestionIndex < suggestions.length - 1) {
+                    suggestions[activeSuggestionIndex + 1].focus();
+                }
+                break;
+
+            case 'ArrowUp':
+                e.preventDefault();
+                if (!isInputFocused && activeSuggestionIndex > 0) {
+                    suggestions[activeSuggestionIndex - 1].focus();
+                } else if (!isInputFocused && activeSuggestionIndex === 0) {
+                    boardTitleInput.focus();
+                }
+                break;
+
+            case 'Enter':
+                if (!isInputFocused) {
+                    e.preventDefault();
+                    boardTitleInput.value = activeElement.textContent;
+                    suggestionContainer.style.display = 'none';
+                    boardTitleInput.focus();
+                }
+                break;
+
+            case 'Escape':
+                suggestionContainer.style.display = 'none';
+                boardTitleInput.focus();
+                break;
+        }
+    });
+
 });
 
 var favouriteBtn = document.querySelectorAll(".favourite-btn");
@@ -68,13 +178,6 @@ const table = $("#tasksTableReference").DataTable({
         { data: "id" },
         { data: "title" },
         { data: "assignedTo" },
-        { data: "startDate" },
-        { data: "endDate" },
-        {
-            data: "status", render: function (data, type, row) {
-                return getStatusBadge(data);
-            }
-        },
         {
             data: "priority", render: function (data, type, row) {
                 return getPriorityBadge(data);
@@ -87,10 +190,7 @@ const table = $("#tasksTableReference").DataTable({
         { width: "50px", targets: 1 },
         { width: "150px", targets: 2 },
         { width: "120px", targets: 3 },
-        { width: "100px", targets: 4 },
-        { width: "100px", targets: 5 },
-        { width: "120px", targets: 6 },
-        { width: "100px", targets: 7 }
+        { width: "100px", targets: 4 }
     ],
     fixedColumns: true
 });
@@ -442,23 +542,23 @@ function getStatusBadge(status) {
     let statusText = status.toString().toLowerCase();
 
     switch (statusText) {
-        case "0":
+        case "1":
         case "new":
             badgeClass = "bg-primary"; statusText = "New";
             break;
-        case "1":
+        case "2":
         case "open":
             badgeClass = "bg-secondary"; statusText = "Open";
             break;
-        case "2":
+        case "3":
         case "in progress":
             badgeClass = "bg-success"; statusText = "In Progress";
             break;
-        case "3":
+        case "4":
         case "completed":
             badgeClass = "bg-info"; statusText = "Completed";
             break;
-        case "4":
+        case "5":
         case "closed":
             badgeClass = "bg-warning"; statusText = "Closed";
             break;

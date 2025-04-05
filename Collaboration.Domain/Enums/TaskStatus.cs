@@ -2,9 +2,9 @@
 
 public enum TaskStatus : short
 {
-    NEW = 0,
-    OPEN = 1,
-    IN_PROGRESS = 2,
-    COMPLETED = 3,
-    CLOSED = 4
+    NEW = 1,
+    OPEN = 2,
+    IN_PROGRESS = 3,
+    COMPLETED = 4,
+    CLOSED = 5
 }

@@ -6,6 +6,7 @@ using Collaboration.Application.Features.Task.Queries.GetAllTasksBoardQuery;
 using Collaboration.Application.Features.Task.Queries.GetAllTasksQuery;
 using Collaboration.Application.Features.Task.Queries.GetTaskByIdQeury;
 using Collaboration.Domain.DTOs.Task;
+using Collaboration.Domain.DTOs.TaskAttachement;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SendGrid.Helpers.Errors.Model;
@@ -92,13 +93,29 @@ public class TaskController(IMapper _mapper, IMediator _mediator) : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateTaskDto createTaskDto)
+    public async Task<IActionResult> Create([FromForm] CreateTaskDto createTaskDto, [FromForm] List<IFormFile> files)
     {
         try
         {
             var command = _mapper.Map<CreateTaskCommand>(createTaskDto);
-            var result = await _mediator.Send(command);
-            return Ok(result.Message);
+            if (files != null && files.Count > 0)
+            {
+                foreach (var file in files)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await file.CopyToAsync(memoryStream);
+
+                        command.Attachments.Add(new TaskAttachmentDto
+                        {
+                            Name = file.FileName,
+                            ContentType = file.ContentType,
+                            Data = memoryStream.ToArray()
+                        });
+                    }
+                }
+            }
+            return Ok((await _mediator.Send(command)).Message);
         }
         catch (BadRequestException ex)
         {
@@ -115,11 +132,28 @@ public class TaskController(IMapper _mapper, IMediator _mediator) : Controller
     }
 
     [HttpPut]
-    public async Task<IActionResult> Update(int id, [FromBody] UpdateTaskDto updateTaskDto)
+    public async Task<IActionResult> Update(int id, [FromForm] UpdateTaskDto updateTaskDto, [FromForm] List<IFormFile> files)
     {
         try
         {
             var command = _mapper.Map<UpdateTaskCommand>(updateTaskDto with { Id = id });
+            if (files != null && files.Count > 0)
+            {
+                foreach (var file in files)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await file.CopyToAsync(memoryStream);
+
+                        command.Attachments.Add(new TaskAttachmentDto
+                        {
+                            Name = file.FileName,
+                            ContentType = file.ContentType,
+                            Data = memoryStream.ToArray()
+                        });
+                    }
+                }
+            }
             var result = await _mediator.Send(command);
             return Ok(result.Message);
         }
