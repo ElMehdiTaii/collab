@@ -10,4 +10,4 @@ public record CreateTaskCommand(string Title,
     DateTime? EndDate,
     int AssignedTo,
     int BoardId
-    ) : IRequest<Response>;
+    public int Status { get; set; }
