@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Collaboration.Application.Features.Authentication.Queries.AuthenticationQuery;
 using Collaboration.Application.Features.Board.Commands.CreateBoardCommand;
+using Collaboration.Application.Features.Board.Commands.UpdateBoardCommand;
 using Collaboration.Application.Features.Task.Commands.CreateTaskCommand;
 using Collaboration.Application.Features.Task.Commands.UpdateTaskCommand;
 using Collaboration.Domain.DTOs.Authentication;
@@ -8,7 +9,6 @@ using Collaboration.Domain.DTOs.Board;
 using Collaboration.Domain.DTOs.Task;
 using Collaboration.Domain.DTOs.User;
 using Collaboration.Domain.Entities;
-using System.Linq;
 
 namespace Collaboration.MVC.MappingProfiles;
 
@@ -19,6 +19,8 @@ public class MappingConfig : Profile
         CreateMap<LoginDto, AuthenticationQuery>().ReverseMap();
 
         CreateMap<CreateBoardDto, CreateBoardCommand>().ReverseMap();
+
+        CreateMap<UpdateBoardDto, UpdateBoardCommand>().ReverseMap();
 
         CreateMap<CreateTaskDto, CreateTaskCommand>().ReverseMap();
 
@@ -71,7 +73,7 @@ public class MappingConfig : Profile
         int totalTasks = tasks.Count(t => t.Status != (int)Domain.Enums.TaskStatus.CLOSED);
 
         bool completedTasks = tasks.Count(task => task.Status == (int)Domain.Enums.TaskStatus.COMPLETED) == totalTasks && totalTasks != 0;
-        
+
         int openTasks = tasks.Count(task => task.Status == (int)Domain.Enums.TaskStatus.OPEN);
         int newTasks = tasks.Count(task => task.Status == (int)Domain.Enums.TaskStatus.NEW);
         int closedTasks = tasks.Count(task => task.Status == (int)Domain.Enums.TaskStatus.CLOSED);

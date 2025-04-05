@@ -30,4 +30,10 @@ public sealed class BoardRepository(CollaborationDatabaseContext context) : Gene
         .OrderByDescending(b => b.Id)
         .ToListAsync();
     }
+
+    public async Task<bool> UpdateBoardAsync(Board board)
+    {
+        _context.Update(board);
+        return await _context.SaveChangesAsync() > 0;
+    }
 }

@@ -1,6 +1,12 @@
 ﻿@{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Task";
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles
+{
+    <link href="~/assets/css/task.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
 }
 <div class="row">
     <div class="col-12">
@@ -137,7 +143,6 @@
     </div>
 </div>
 
-
 <div class="modal fade zoomIn" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0">
@@ -157,17 +162,10 @@
                         <div class="col-lg-12">
                             <div>
                                 <label for="tasksDescription-field" class="form-label">Description</label>
-                                <input type="text" id="tasksDescription-field" class="form-control" placeholder="Description" required />
+                                <textarea rows="3" type="text" class="form-control" name="tasksDescription" id="tasksDescription"
+                                          placeholder="Enter task description" required></textarea>
                             </div>
                         </div>
-                        <!--end col-->
-                        <div class="col-lg-6">
-                            <label for="taskAssignedTo-field" class="form-label">Assigned To</label>
-                            <select class="form-control" id="taskAssignedTo-field">
-                                <option value="">Assigned To</option>
-                            </select>
-                        </div>
-                        <!--end col-->
                         <!--end col-->
                         <div class="col-lg-6">
                             <label for="taskStartDate-field" class="form-label">Start Date</label>
@@ -178,7 +176,14 @@
                             <input type="date" id="taskEndDate-field" class="form-control" placeholder="End date" required />
                         </div>
                         <!--end col-->
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
+                            <label for="taskAssignedTo-field" class="form-label">Assigned To</label>
+                            <select class="form-control" id="taskAssignedTo-field">
+                                <option value="">Assigned To</option>
+                            </select>
+                        </div>
+                        <!--end col-->
+                        <div class="col-lg-4">
                             <label for="task-status" class="form-label">Status</label>
                             <select class="form-control" id="task-status">
                                 <option value="">Status</option>
@@ -190,7 +195,7 @@
                             </select>
                         </div>
                         <!--end col-->
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <label for="taskPriority-field" class="form-label">Priority</label>
                             <select class="form-control" id="taskPriority-field">
                                 <option value="">Priority</option>
@@ -202,6 +207,38 @@
                         <!--end col-->
                     </div>
                     <!--end row-->
+                    <div class="col-lg-12 mt-3">
+                        <label class="form-label" for="project-thumbnail-img">Télécharger des images</label>
+                        <input class="form-control" multiple id="project-thumbnail-img" type="file" accept="image/png, image/gif, image/jpeg">
+                    </div>
+                    <div class="col-lg-12 mt-3">
+                        <div class="accordion custom-accordionwithicon-plus" id="accordionWithplusicon">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="accordionwithplusExample1">
+                                    <button class="accordion-button fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#accor_plusExamplecollapse1" aria-expanded="true" aria-controls="accor_plusExamplecollapse1">
+                                        Fichiers
+                                    </button>
+                                </h2>
+                                <div id="accor_plusExamplecollapse1" class="accordion-collapse collapse show" aria-labelledby="accordionwithplusExample1" data-bs-parent="#accordionWithplusicon">
+                                    <div class="accordion-body">
+                                        Big July earthquakes confound zany experimental vow. My girl wove six dozen plaid jackets before she quit. Six big devils from Japan quickly forgot how to waltz. try again until it looks right, and each assumenda labore aes Homo nostrud organic, assumenda labore aesthetic magna elements, buttons, everything.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="accordionwithplusExample2">
+                                    <button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accor_plusExamplecollapse2" aria-expanded="false" aria-controls="accor_plusExamplecollapse2">
+                                        Commentaires
+                                    </button>
+                                </h2>
+                                <div id="accor_plusExamplecollapse2" class="accordion-collapse collapse" aria-labelledby="accordionwithplusExample2" data-bs-parent="#accordionWithplusicon">
+                                    <div class="accordion-body">
+                                        It makes a statement, it’s impressive graphic design. Increase or decrease the letter spacing depending on the situation and try, try again until it looks right, and each letter has the perfect spot of its own. commodo enim craft beer mlkshk aliquip jean shorts ullamco.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <div class="hstack gap-2 justify-content-end">
@@ -213,11 +250,9 @@
         </div>
     </div>
 </div>
-<!--end modal-->
+
 @section scripts {
-    <link href="~/assets/css/task.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="~/assets/js/app/task.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 }

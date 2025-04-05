@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.pageTitle = "Board";
+    ViewBag.pageTitle = "Tableaux";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -25,13 +25,13 @@
                 <div class="hstack gap-2">
                     <button id="btnCreateBoard" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#createboardModal">
-                        <i class="ri-add-line align-bottom me-1"></i> Create Board
+                        <i class="ri-add-line align-bottom me-1"></i> Créer un tableau
                     </button>
                 </div>
             </div>
             <div class="col-lg-3 col-auto">
                 <div class="search-box">
-                    <input type="text" class="form-control search" id="search-task-options" placeholder="Search for board">
+                    <input type="text" class="form-control search" id="search-task-options" placeholder="Rechercher un tableau">
                     <i class="ri-search-line search-icon"></i>
                 </div>
             </div>
@@ -47,7 +47,7 @@
 </div>
 
 <nav>
-    <ul class="pagination justify-content-center" id="boardPagination"></ul>
+    <ul class="pagination justify-content-end" id="boardPagination"></ul>
 </nav>
 
 <div class="modal fade" id="createboardModal" tabindex="-1" aria-labelledby="createboardModalLabel"
@@ -55,27 +55,32 @@
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content border-0">
             <div class="modal-header p-3 bg-info-subtle">
-                <h5 class="modal-title" id="createboardModalLabel">Add Board</h5>
+                <h5 class="modal-title" id="boardModalLabel">Add Board</h5>
                 <button type="button" class="btn-close" id="addBoardBtn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form action="#" id="createBoardForm">
                     <div class="row">
+                        <!-- Hidden input for board ID during edit -->
+                        <input type="hidden" id="boardId" name="boardId" value="">
+
                         <div class="col-lg-12">
                             <label for="boardTitle" class="form-label">Board Title</label>
                             <input type="text" class="form-control" name="title" id="boardTitle"
-                                   placeholder="Enter board name">
+                                   placeholder="Entrez le nom du tableau">
                         </div>
                         <div class="col-lg-12">
                             <label for="boardDescription" class="form-label">Board Description</label>
                             <textarea rows="3" type="text" class="form-control" name="description" id="boardDescription"
-                                      placeholder="Enter board description"></textarea>
+                                      placeholder="Entrez la description du tableau"></textarea>
                         </div>
-                        <div class="col-lg-12 mt-2">
+
+                        <!-- This div will be hidden in edit mode -->
+                        <div class="col-lg-12 mt-2 reference-list-container">
                             <div class="hstack gap-3 mb-3">
                                 <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapsGridReference" aria-expanded="false" aria-controls="collapsGridReference">
-                                    <i class=" ri-add-circle-line"></i> Liste des références
+                                    <i class="ri-add-circle-line"></i> Liste des références
                                 </button>
                             </div>
                             <div class="collapse" id="collapsGridReference">
@@ -94,7 +99,7 @@
                                                         <thead class="table-light text-muted">
                                                             <tr>
                                                                 <th class="no-sort text-center align-middle" style="width: 50px;">
-                                                                    
+
                                                                 </th>
                                                                 <th style="width: 50px;">ID</th>
                                                                 <th style="width: 150px;">Name</th>
@@ -117,15 +122,13 @@
                         </div>
                         <div class="modal-footer">
                             <div class="hstack gap-2 justify-content-end">
-                            <button type="button" class="btn btn-light"
-                                    data-bs-dismiss="modal">
-                                Close
-                            </button>
-                            <button type="submit" class="btn btn-success" id="addNewBoard">
-                                Add
-                                Board
-                            </button>
-                        </div>
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                                    Close
+                                </button>
+                                <button type="submit" class="btn btn-success" id="saveBoard">
+                                    Add Board
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </form>

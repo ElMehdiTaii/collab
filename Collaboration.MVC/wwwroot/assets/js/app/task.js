@@ -1,5 +1,10 @@
 ﻿$(document).ready(() => {
 
+    var myModal = new bootstrap.Modal(document.getElementById('showModal'), {
+        backdrop: 'static',
+        keyboard: false
+    });
+
     $(".add-btn").on("click", async (event) => {
         $("#add-btn").text("Create Task").removeClass("btn-warning").addClass("btn-success");
     });

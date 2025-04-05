@@ -2,6 +2,7 @@
 using Collaboration.Application.Exceptions;
 using Collaboration.Application.Features.Board.Commands.CreateBoardCommand;
 using Collaboration.Application.Features.Board.Commands.DeleteBoardCommand;
+using Collaboration.Application.Features.Board.Commands.UpdateBoardCommand;
 using Collaboration.Application.Features.Board.Queries.GetAllBoardQuery;
 using Collaboration.Domain.DTOs.Board;
 using MediatR;
@@ -44,6 +45,29 @@ public class BoardController(IMapper _mapper, IMediator _mediator) : Controller
         try
         {
             var command = _mapper.Map<CreateBoardCommand>(createBoardDto);
+            var result = await _mediator.Send(command);
+            return Ok(new { message = result.Message });
+        }
+        catch (BadRequestException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return Problem(
+                detail: ex.Message,
+                statusCode: 500,
+                title: "An unexpected error occurred."
+            );
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Update([FromBody] UpdateBoardDto updateBoardDto)
+    {
+        try
+        {
+            var command = _mapper.Map<UpdateBoardCommand>(updateBoardDto);
             var result = await _mediator.Send(command);
             return Ok(new { message = result.Message });
         }

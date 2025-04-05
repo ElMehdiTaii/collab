@@ -1,12 +1,12 @@
 ﻿$(document).ready(() => {
-    console.log($("#user-claims").val());
-
     loadBoards();
 
     loadUsers();
 
+    setupBoardSearch();
+
     $('#btnCreateBoard').on('click', function () {
-        table.ajax.reload();    
+        openCreateBoardModal();
     });
 
     $("#showSelectedOnly").on("change", function () {
@@ -95,6 +95,41 @@ const table = $("#tasksTableReference").DataTable({
     fixedColumns: true
 });
 
+let originalAllBoards = [];
+
+let isEditMode = false;
+
+const openCreateBoardModal = () => {
+    isEditMode = false;
+    $('#boardModalLabel').text('Add Board');
+    $('#saveBoard').text('Add Board');
+    $('#boardId').val('');
+    $('#boardTitle').val('');
+    $('#boardDescription').val('');
+
+    $('.reference-list-container').show();
+
+    $('#createboardModal').modal('show');
+};
+
+const openEditBoardModal = (boardId) => {
+    isEditMode = true;
+
+    const board = allBoards.find(b => b.id === boardId);
+    if (!board) return;
+
+    $('#boardModalLabel').text('Edit Board');
+    $('#saveBoard').text('Update Board');
+
+    $('#boardId').val(board.id);
+    $('#boardTitle').val(board.title);
+    $('#boardDescription').val(board.description || board.discription);
+
+    $('.reference-list-container').hide();
+
+    $('#createboardModal').modal('show');
+};
+
 const loadBoards = async (selectedUserIds = []) => {
     try {
         if (!Array.isArray(selectedUserIds) || selectedUserIds.length === 0) {
@@ -108,13 +143,39 @@ const loadBoards = async (selectedUserIds = []) => {
             data: JSON.stringify(selectedUserIds)
         });
 
+        originalAllBoards = [...response];
         allBoards = response;
         renderBoards();
 
     } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to load boards.');
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: error.message,
+        });
     }
+};
+
+const setupBoardSearch = () => {
+    $('#search-task-options').on('input', function () {
+        const searchTerm = $(this).val().toLowerCase().trim();
+
+        if (!searchTerm) {
+            allBoards = [...originalAllBoards];
+            renderBoards();
+            return;
+        }
+
+        const filteredBoards = originalAllBoards.filter(board =>
+            board.title.toLowerCase().includes(searchTerm) ||
+            (board.discription && board.discription.toLowerCase().includes(searchTerm)) ||
+            (board.description && board.description.toLowerCase().includes(searchTerm))
+        );
+
+        allBoards = filteredBoards;
+        currentPage = 1;
+        renderBoards();
+    });
 };
 
 const renderBoards = () => {
@@ -156,7 +217,10 @@ const renderBoards = () => {
                                                     <a class="dropdown-item" href="Task/index/${board.id}">
                                                         <i class="ri-eye-fill align-bottom me-2 text-muted"></i> View
                                                     </a>
-                                                    <a class="dropdown-item" href="Task/index/${board.id}">
+                                                    <a class="dropdown-item" href="javascript:void(0);" onclick="openEditBoardModal(${board.id})">
+                                                        <i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
+                                                    </a>
+                                                    <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#removeProjectModal" data-board-id="${board.id}">
                                                         <i class="ri-delete-bin-3-fill align-bottom me-2 text-muted"></i> Delete
                                                     </a>
                                                 </div>
@@ -174,13 +238,13 @@ const renderBoards = () => {
                                     </div>
                                     <div class="flex-grow-1">
                                         <h5 class="mb-1 fs-14"><a href="apps-projects-overview.html" class="text-body">${board.title}</a></h5>
-                                        <p class="text-muted text-truncate-two-lines mb-3">${board.discription}</p>
+                                        <p class="text-muted text-truncate-two-lines mb-3">${board.description || board.discription}</p>
                                     </div>
                                 </div>
                                 <div class="mt-auto">
                                     <div class="d-flex mb-2">
                                         <div class="flex-grow-1">
-                                            <div>Tasks</div>
+                                            <div>Progrès</div>
                                         </div>
                                         <div class="flex-shrink-0">
                                             <div><i class="ri-list-check align-bottom me-1 text-muted"></i>
@@ -300,25 +364,35 @@ const loadUsers = async () => {
     }
 }
 
-const handleCreateBoard = async (e) => {
-
+const handleBoardSubmit = async (e) => {
     e.preventDefault();
 
-    const selectedTaskIds = table.$(".task-checkbox:checked").map(function () {
-        return $(this).data("id");
-    }).get();
+    const boardId = $('#boardId').val();
+
+    // Get selected task IDs (only if in create mode)
+    let selectedTaskIds = [];
+    if (!isEditMode) {
+        selectedTaskIds = table.$(".task-checkbox:checked").map(function () {
+            return $(this).data("id");
+        }).get();
+    }
 
     const data = {
+        id: boardId || null,
         title: $('#boardTitle').val(),
-        description: $('#boardDescription').val(),
-        tasksId: selectedTaskIds
+        description: $('#boardDescription').val()
     };
 
-    console.log(data);
+    // Only include tasks if we're creating a new board
+    if (!isEditMode) {
+        data.tasksId = selectedTaskIds;
+    }
 
     try {
+        const url = isEditMode ? '/Board/Update' : '/Board/Create';
+
         const response = await $.ajax({
-            url: '/Board/Create',
+            url: url,
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data)
@@ -327,13 +401,23 @@ const handleCreateBoard = async (e) => {
         loadBoards();
         $('#createBoardForm')[0].reset();
         $('#createboardModal').modal('hide');
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: `Board ${isEditMode ? 'updated' : 'created'} successfully!`,
+        });
     } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to create board.');
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: error.message,
+        });
     }
 };
 
-$('#createBoardForm').on('submit', handleCreateBoard);
+// Replace the existing event handler
+$('#createBoardForm').off('submit').on('submit', handleBoardSubmit);
 
 document.getElementById('userList').addEventListener('change', () => {
     const selectedIds = Array.from(document.getElementById('userList').selectedOptions)
@@ -341,6 +425,7 @@ document.getElementById('userList').addEventListener('change', () => {
 
     loadBoards([...new Set(selectedIds)]);
 });
+
 function addCheckboxListeners() {
     const selectAll = document.getElementById("selectAll");
     const checkboxes = document.querySelectorAll(".row-checkbox");
@@ -351,6 +436,7 @@ function addCheckboxListeners() {
         });
     }
 }
+
 function getStatusBadge(status) {
     let badgeClass;
     let statusText = status.toString().toLowerCase();
@@ -382,6 +468,7 @@ function getStatusBadge(status) {
 
     return `<span class="badge ${badgeClass}">${statusText}</span>`;
 }
+
 function getPriorityBadge(priority) {
     let badgeClass;
     switch (priority.toLowerCase()) {
